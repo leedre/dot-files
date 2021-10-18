@@ -1,5 +1,5 @@
-# Hello message
-echo "\nHello from zsh"
+# Greetings shell message
+echo "\nHello from desktop .zshrc"
 
 # Make vim my EDITOR permanenty
 export EDITOR=vim
@@ -11,11 +11,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/leedre/.oh-my-zsh"
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -88,11 +89,11 @@ plugins=(
    zsh-autosuggestions
    copydir
    dirhistory
+   sudo
    copyfile
    copybuffer
-)
+   )
 
-source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -120,21 +121,15 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 #ls alias
 alias ll='ls -alF'
 alias l='ls -AF' # -A list all entries except for . and .. and sets for super user
 # alias l='ls -C'  #-C force multi-column output and -f means output is not sorted
 # alias l='ls -Cf'  #-C force multi-column output and -f means output is not sorted
 
-# Copy the PWD to the clipboard using pbcopy app
-alias cpwd="pwd | tr -d '\n' | pbcopy && echo 'pwd copied to clipboard'"
-
-# Create a folder and cd into it
-function mkcd() { mkdir -p "$@" && "$_"; }
-
+# Some git commands to use are:
+# Windows needs double quotes
+# Mac needs single quotes
 # Create alias for git commands
 # alias gdca - git diff --cached
 # gpf! - git push --force
@@ -160,6 +155,9 @@ alias glog='git log'
 #alias glogp='git log --pretty=format:"%h %s" --graph'
 alias gl='git --no-pager  log -n 20 --pretty=format:%h%x09%an%x09%ad%x09%s --date=short --no-merges'
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 # Alias to open .zshrc from any pwd
 alias zrc="$EDITOR $HOME/.zshrc"
 
@@ -170,7 +168,26 @@ alias vrc="$EDITOR $HOME/.vimrc"
 alias src="source $HOME/.zshrc"
 
 # Move pwd to $HOME 
-alias home="cd $HOME/"
+alias h="cd $HOME/"
 
-# Alias syntax 
-# alias <flag> <alias_name>="command"
+# Move to previous folder
+alias b="cd ../"
+
+#Key Bindings
+#This plugin provides a few widgets that you can use with bindkey:
+#
+#autosuggest-accept: Accepts the current suggestion.
+#autosuggest-execute: Accepts and executes the current suggestion.
+#autosuggest-clear: Clears the current suggestion.
+#autosuggest-fetch: Fetches a suggestion (works even when suggestions are disabled).
+#autosuggest-disable: Disables suggestions.
+#autosuggest-enable: Re-enables suggestions.
+#autosuggest-toggle: Toggles between enabled/disabled suggestions.
+#For example, this would bind ctrl + space to accept the current suggestion.
+#
+#bindkey '^ ' autosuggest-accept
+
+# Bindkey for autocomplete suggestion
+bindkey '^ ' autosuggest-accept
+
+source $ZSH/oh-my-zsh.sh
