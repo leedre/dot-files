@@ -75,6 +75,10 @@ set ignorecase
 " enable search highlighting
 set hlsearch
 
+" Uncommenting this causes vimrc to start in replace mode
+" This unsets the "last search pattern" register by hitting return
+" nnoremap <silent> <ESC> :nohlsearch<CR>
+
 " Incremental search that shows partial matches
 " Starts searching before pressing enter
 set incsearch
@@ -93,10 +97,6 @@ set wrap
 
 " Avoid wrapping a line in the middle of a word
 set linebreak
-
-" Move to next window
-map <Tab> <C-W>w
-map <S-Tab> <C-W>p
 
 " Redo with Shift + u instead of Ctrl + r
 noremap U <C-R>
@@ -139,13 +139,6 @@ if maparg('<C-L>', 'n') ==# ''
   nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
 
-" Fast quit and save from normal and insert mode
-" map <C-S> <ESC>:x<CR>
-" imap <C-S> <ESC>:x<CR>
-
-
-" Displays the status on the right side of the status line. By default
-" the line, column, virtual column, and relative position
 set ruler
 
 if !&scrolloff
@@ -263,6 +256,3 @@ autocmd FileType html inoremap ;c <!----><Space><++><Esc>
 autocmd FileType html inoremap ;d <div></div><Space><++><Esc>FdT>i
 
 "-------------------------------------------------------------------------
-"
-" New terminal opened in split window with prompt
-" command! -nargs=* T split | terminal <args> 
