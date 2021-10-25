@@ -1,5 +1,5 @@
 # Hello message
-echo "\nHello from zsh"
+echo "\nHello from MacOS's .zshrc"
 
 # Make vim my EDITOR permanenty
 export EDITOR=vim
@@ -155,10 +155,11 @@ alias gco='git checkout'
 alias gcob='git checkout -b'
 alias gcot='git checkout -t'
 alias gcotb='git checkout --track -b'
-alias gll='git log --oneline'
-alias glog='git log'
+alias gl='git --no-pager log --oneline'
+#alias gll='git log --oneline --decorate --graph'
+alias gll='git --no-pager log'
 #alias glogp='git log --pretty=format:"%h %s" --graph'
-alias gl='git --no-pager  log -n 20 --pretty=format:%h%x09%an%x09%ad%x09%s --date=short --no-merges'
+alias glog='git --no-pager log -n 20 --pretty=format:%h%x09%an%x09%ad%x09%s --date=short --no-merges'
 
 # Alias to open .zshrc from any pwd
 alias zrc="$EDITOR $HOME/.zshrc"
@@ -170,7 +171,22 @@ alias vrc="$EDITOR $HOME/.vimrc"
 alias src="source $HOME/.zshrc"
 
 # Move pwd to $HOME 
-alias home="cd $HOME/"
+alias h="cd $HOME/"
 
 # Alias syntax 
 # alias <flag> <alias_name>="command"
+
+#Key Bindings
+#This plugin provides a few widgets that you can use with bindkey:
+
+#autosuggest-accept: Accepts the current suggestion.
+#autosuggest-execute: Accepts and executes the current suggestion.
+#autosuggest-clear: Clears the current suggestion.
+#autosuggest-fetch: Fetches a suggestion (works even when suggestions are disabled).
+#autosuggest-disable: Disables suggestions.
+#autosuggest-enable: Re-enables suggestions.
+#autosuggest-toggle: Toggles between enabled/disabled suggestions.
+#For example, this would bind ctrl + space to accept the current suggestion.
+
+# Control + space accepts autosuggest
+bindkey '^ ' autosuggest-accept
