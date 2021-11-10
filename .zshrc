@@ -87,7 +87,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-   git
    zsh-autosuggestions
    copydir
    dirhistory
@@ -158,10 +157,12 @@ alias gcob='git checkout -b'
 alias gcot='git checkout -t'
 alias gcotb='git checkout --track -b'
 alias gl='git --no-pager log --oneline'
+alias glr='git --no-pager log --oneline --reverse'
 #alias gll='git log --oneline --decorate --graph'
 alias gll='git --no-pager log'
 #alias glogp='git log --pretty=format:"%h %s" --graph'
-alias glog='git --no-pager log -n 20 --pretty=format:%h%x09%an%x09%ad%x09%s --date=short --no-merges'
+#alias glog='git --no-pager log -n 20 --pretty=format:%h%x09%an%x09%ad%x09%s --date=short --no-merges'
+alias glog='git rev-list --all --pretty=oneline'
 
 # Alias to open .zshrc from any pwd
 alias zrc="$EDITOR $HOME/.zshrc"
