@@ -1,5 +1,8 @@
 # Hello message
-echo "\nHello from MacOS's .zshrc"
+echo "\n---------------------------"
+echo " Hello from MacBook .zshrc"
+echo "---------------------------\n"
+head -2 bible
 
 # Make vim my EDITOR permanenty
 export EDITOR=vim
@@ -92,8 +95,6 @@ plugins=(
    copybuffer
 )
 
-source $ZSH/oh-my-zsh.sh
-
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -124,8 +125,9 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 #ls alias
-alias ll='ls -alF'
 alias l='ls -AF' # -A list all entries except for . and .. and sets for super user
+alias ll='ls -alF'
+# alias l='ls -AF' # -A list all entries except for . and .. and sets for super user
 # alias l='ls -C'  #-C force multi-column output and -f means output is not sorted
 # alias l='ls -Cf'  #-C force multi-column output and -f means output is not sorted
 
@@ -139,8 +141,8 @@ function mkcd() { mkdir -p "$@" && "$_"; }
 # alias gdca - git diff --cached
 # gpf! - git push --force
 # grhh - git reset --hard
-alias gss='git status'
-alias gs='git status -sb'    # Displays 2 lines with branch and untracked file
+alias gs='git status'
+alias gss='git status -sb'    # Displays 2 lines with branch and untracked file
 alias gpull='git pull'
 alias gpush='git push'
 alias gaa='git add .'
@@ -149,8 +151,8 @@ alias gd='git diff | mate'
 #alias gc='git commit -m'
 alias gc='git commit -v'      # -v flag aka --verbose shows the diff of the change 
 alias gca='git commit -v -a'
-alias gb='git branch'
-alias gba='git branch -a'
+alias gb='git --no-pager branch'
+alias gba='git --no-pager  branch -a'
 alias gco='git checkout'
 alias gcob='git checkout -b'
 alias gcot='git checkout -t'
@@ -173,6 +175,21 @@ alias src="source $HOME/.zshrc"
 # Move pwd to $HOME 
 alias h="cd $HOME/"
 
+# Shortcut for cd ..
+alias b="cd ../"
+
+# Change directory to MacOS downloads folder
+alias dl="cd /Users/leedre/Downloads"
+
+# Change directory to run control folder
+alias df="cd $HOME/.config/dot_files"
+
+# Change directory to config folder
+alias cf="cd $HOME/.config"
+
+# Change directory to last accessed folder just like alt + d function in CLUT extension
+alias d="cd -"
+
 # Alias syntax 
 # alias <flag> <alias_name>="command"
 
@@ -189,4 +206,10 @@ alias h="cd $HOME/"
 #For example, this would bind ctrl + space to accept the current suggestion.
 
 # Control + space accepts autosuggest
-bindkey '^ ' autosuggest-accept
+# bindkey '^ ' autosuggest-accept
+
+source $ZSH/oh-my-zsh.sh
+
+# Warning: Homebrew's sbin was not found in your PATH but you have installed
+# The fix was this:
+export PATH="/usr/local/sbin:$PATH"
