@@ -13,6 +13,9 @@ endif
 call plug#begin('~/.vim/autoload')
 Plug 'junegunn/goyo.vim'
 Plug 'jacoborus/tender.vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'michaeljsmith/vim-indent-object'
+
 " Nord-vim 
 " Plug 'arcticicestudio/nord-vim'
 call plug#end()
@@ -25,8 +28,24 @@ endif
 " Tender theme plugin
 colorscheme tender
 
+" --------------------------------------------
+" ----------- Leader keys --------------------
+" --------------------------------------------
+
+" Map leader key to comma (,)
+let mapleader = ","
+
 " Goyo Plugin toggle
 map <leader>g :Goyo \| set linebreak<CR>
+
+" Vim motion leader keys
+map <leader>f <Plug>(easymotion-w)
+map <leader>F <Plug>(easymotion-b)
+map <leader>l <Plug>(easymotion-j)
+map <leader>L <Plug>(easymotion-k)
+map <leader>c <Plug>(easymotion-s)
+" --------------------------------------------
+" --------------------------------------------
 
 " Turns off bell sound
 set visualbell
@@ -139,6 +158,12 @@ if maparg('<C-L>', 'n') ==# ''
   nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
 
+" Fast quit and save from normal and insert mode
+" map <C-S> <ESC>:x<CR>
+" imap <C-S> <ESC>:x<CR>
+
+" Displays the status on the right side of the status line. By default
+" the line, column, virtual, and relative position
 set ruler
 
 if !&scrolloff
@@ -228,31 +253,38 @@ set pastetoggle=<f9>
 " Commenting blocks of code.
 "-------------------------------------------------------------------------
 
-set nocompatible
-filetype plugin on
+" set nocompatible
+" filetype plugin on
 
-autocmd FileType c,cpp,html inoremap <Space><Space> <Esc>/<++><Enter>"_c4l
-autocmd FileType c,cpp,html vnoremap <Space><Space> <Esc>/<++><Enter>"_c4l
-autocmd FileType c,cpp,html map <Space><Space> <Esc>/<++><Enter>"_c4l
+" autocmd FileType c,cpp,html inoremap <Space><Space> <Esc>/<++><Enter>"_c4l
+" autocmd FileType c,cpp,html vnoremap <Space><Space> <Esc>/<++><Enter>"_c4l
+" autocmd FileType c,cpp,html map <Space><Space> <Esc>/<++><Enter>"_c4l
 
-autocmd FileType c inoremap ,c /* */<Space><++><Esc>2F*a<Space>
-autocmd FileType cpp inoremap ,c /* */<Space><++><Esc>2F*a<Space>
+" autocmd FileType c inoremap ,c /* */<Space><++><Esc>2F*a<Space>
+" autocmd FileType cpp inoremap ,c /* */<Space><++><Esc>2F*a<Space>
+
+
+" Tpope vim commentarty plugin
+" My favorite file type isn't supported!
+" Relax! You just have to adjust 'commentstring':
+
+" autocmd FileType apache setlocal commentstring=#\ %s
 
 "-------------------------------------------------------------------------
 " HTML vimrc
 "-------------------------------------------------------------------------
 
-autocmd FileType html inoremap ;b <b></b><Space><++><Esc>FbT>i
-autocmd FileType html inoremap ;i <em></em><Space><++><Esc>FeT>i
-autocmd FileType html inoremap ;1 <h1></h1><Enter><Enter><++><Esc>2kf<i
-autocmd FileType html inoremap ;2 <h2></h2><Enter><Enter><++><Esc>2kf<i
-autocmd FileType html inoremap ;3 <h3></h3><Enter><Enter><++><Esc>2kf<i
-autocmd FileType html inoremap ;p <p></p><Enter><Enter><++><Esc>02kf>a
-autocmd FileType html inoremap ;a <a<Space>href=""><++></a><Space><++><Esc>F"i
-autocmd FileType html inoremap ;ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03kf<i
-autocmd FileType html inoremap ;li <Esc>o<li></li><Esc>F>a
-autocmd FileType html inoremap ;ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03kf<i
-autocmd FileType html inoremap ;c <!----><Space><++><Esc>
-autocmd FileType html inoremap ;d <div></div><Space><++><Esc>FdT>i
+" autocmd FileType html inoremap ;b <b></b><Space><++><Esc>FbT>i
+" autocmd FileType html inoremap ;i <em></em><Space><++><Esc>FeT>i
+" autocmd FileType html inoremap ;1 <h1></h1><Enter><Enter><++><Esc>2kf<i
+" autocmd FileType html inoremap ;2 <h2></h2><Enter><Enter><++><Esc>2kf<i
+" autocmd FileType html inoremap ;3 <h3></h3><Enter><Enter><++><Esc>2kf<i
+" autocmd FileType html inoremap ;p <p></p><Enter><Enter><++><Esc>02kf>a
+" autocmd FileType html inoremap ;a <a<Space>href=""><++></a><Space><++><Esc>F"i
+" autocmd FileType html inoremap ;ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03kf<i
+" autocmd FileType html inoremap ;li <Esc>o<li></li><Esc>F>a
+" autocmd FileType html inoremap ;ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03kf<i
+" autocmd FileType html inoremap ;c <!----><Space><++><Esc>
+" autocmd FileType html inoremap ;d <div></div><Space><++><Esc>FdT>i
 
 "-------------------------------------------------------------------------
