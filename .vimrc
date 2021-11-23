@@ -15,9 +15,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'jacoborus/tender.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'michaeljsmith/vim-indent-object'
-
-" Nord-vim 
-" Plug 'arcticicestudio/nord-vim'
+" Plug 'arcticicestudio/nord-vim'         "Nord-Vim theme plugin
 call plug#end()
 
 " If you have vim >=8.0 or Neovim >= 0.1.5
