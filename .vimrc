@@ -2,8 +2,7 @@ syntax on
 set fileformat=unix
 set cursorline
 set mouse=a             " Allows mouse scrolling
-set scrolloff=99        " Keeps the current line in the middle when scroling and jumping through search results 
-set clipboard=unnamed   " Yank and paste from vim to global clipboard
+set scrolloff=99        " Keeps the current line in the middle when scroling and jumping through search results set clipboard=unnamed   " Yank and paste from vim to global clipboard
 " g~w                   " Toggle case entire word
 
 "================================================
@@ -46,6 +45,8 @@ Plug 'lambdalisue/battery.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'preservim/nerdtree'
 """"""""""""""""""""""""
 """""" Themes """"""""""
 """"""""""""""""""""""""
@@ -87,10 +88,19 @@ nnoremap <leader>s :w<CR>
 " Map Fuzzy Search
 nmap <gf> :FZF<CR>
 
+" --------------------------------------------
+" -----------   NERDTree ---------------------
+" --------------------------------------------
+" nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
+" nnoremap <leader>nf :NERDTreeFind<CR>
+" nnoremap <leader>N :NERDTree<CR>
+" nnoremap <C-t> :NERDTreeToggle<CR>
+
 "================================================
 "=============== Buffer Remaps ==================
 "================================================
-" map gn :bn<cr>
+map gn :bn<cr>
 " map gp :bp<cr>
 " map gd :b#<cr>  
 " map gq :bw<cr>  
@@ -107,6 +117,64 @@ nnoremap <leader>b :ls<CR>:b<Space>
 " --------- Goyo Plugin toggle ---------------
 " --------------------------------------------
 map <leader>g :Goyo \| set linebreak<CR>
+
+" --------------------------------------------
+" ------------- gitgutter ----- --------------
+" --------------------------------------------
+" You can explicitly turn vim-gitgutter off and on (defaults to on):
+
+" turn off with :GitGutterDisable
+" turn on with :GitGutterEnable
+" toggle with :GitGutterToggle.
+" To toggle vim-gitgutter per buffer:
+
+" turn off with :GitGutterBufferDisable
+" turn on with :GitGutterBufferEnable
+" toggle with :GitGutterBufferToggle
+" You can turn the signs on and off (defaults to on):
+
+" turn on with :GitGutterSignsEnable
+" turn off with :GitGutterSignsDisable
+" toggle with :GitGutterSignsToggle.
+" And you can turn line highlighting on and off (defaults to off):
+
+" turn on with :GitGutterLineHighlightsEnable
+" turn off with :GitGutterLineHighlightsDisable
+" toggle with :GitGutterLineHighlightsToggle.
+
+" --------------------------------------------
+" ------------- tpope Surround  --------------
+" --------------------------------------------
+"It's easiest to explain with examples. Press cs"' inside
+
+""Hello world!"
+"to change it to
+
+"'Hello world!'
+"Now press cs'<q> to change it to
+
+"<q>Hello world!</q>
+"To go full circle, press cst" to get
+
+""Hello world!"
+"To remove the delimiters entirely, press ds".
+
+"Hello world!
+"Now with the cursor on "Hello", press ysiw] (iw is a text object).
+
+"[Hello] world!
+"Let's make that braces and add some space (use } instead of { for no space): cs]{
+
+"{ Hello } world!
+"Now wrap the entire line in parentheses with yssb or yss).
+
+"({ Hello } world!)
+"Revert to the original text: ds{ds)
+
+"Hello world!
+"Emphasize hello: ysiw<em>
+
+"<em>Hello</em> world!
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""" Vim airline""""""""""""" 
@@ -201,7 +269,9 @@ set smartindent
 set autoindent
 
 " affects what happens when you press >> or << or ==
-set shiftwidth=3
+set shiftwidth=4
+
+set softtabstop=4
 
 " Use <ENTER> key to create new lines in normal mode
 nnoremap <CR> o<Esc>
@@ -216,12 +286,15 @@ nnoremap <space> i<space><esc>
 " ignore case when searching
 set ignorecase
 
-" enable search highlighting
-set hlsearch
+" Automatically switch search to case-sensitive when search query contains an uppercase letter
+set smartcase
 
 " Incremental search that shows partial matches
 " Starts searching before pressing enter
 set incsearch
+
+" enable search highlighting
+set hlsearch
 
 " Uncommenting this causes vimrc to start in replace mode
 " This unsets the "last search pattern" register by hitting return
@@ -229,9 +302,6 @@ set incsearch
 
 " Removes highlights texts
 map <leader>h :noh<CR>
-
-" Automatically switch search to case-sensitive when search query contains an uppercase letter
-" set smartcase
 
 " Always displays the status bar
 " set laststatus=2
@@ -249,27 +319,33 @@ set linebreak
 noremap U <C-R>
 
 " Visual autocomplete for command menu
-" In insert mode Control-n for completion
+" In insert mode Control-n and control-p to navigate forward and back
 set wildmenu
 
-" Enable autocompletion
-set wildmode=longest,list,full
+" Ignores these when tab completing
+set wildignore=*.o,*.obj.*~
 
-" Set F5 to spellcheck 
+" Enable autocompletion
+" set wildmode=longest,list,full
+
+" Makes commandline tab completion similar to bash
+set wildmode=list:longest,full
+
+" Set leader+5 to spellcheck 
 " Navigate Spell check
 " So you have all your misspellings highlighted…how do you fix them?
-" Type ]s to go to the next misspelled word ([s to go back). 
-" If the word you are on is misspelled type z= and you will be 
+" Type <]s> to go to the next misspelled word (<[s> to go back). 
+" If the word you are on is misspelled type <z=> and you will be 
 " presented with a numbered list of words vim thinks you meant. 
 " Type the corresponding number and hit enter and vim will fix the 
 " word for you! Neat! (hit enter to exit the list without choosing a word)
 "
 " Add and remove words from dictionary
 " What if vim is wrong? To add a word to your local dictionary 
-" move the cursor over the incorrectly marked word and type zg to 
+" move the cursor over the incorrectly marked word and type <zg to 
 " add it to your dictionary. If you do this by accident you can 
-" type zug to undo. If you want vim to mark a word as misspelled 
-" you can add it to your wrong word list by typing zw (zuw to undo).
+" type <zug> to undo. If you want vim to mark a word as misspelled 
+" you can add it to your wrong word list by typing <zw> (zuw to undo).
 map <leader>5 :setlocal spell! spelllang=en_us<CR>
 
 "--------------------------------------------------------------------
@@ -286,6 +362,7 @@ endif
 " Use :help 'option' to see the documentation for the given option.
 
 set autoindent
+" Allows backspace in insert mode
 set backspace=indent,eol,start
 set complete-=i
 set smarttab
@@ -317,9 +394,10 @@ if !&sidescrolloff
 endif
 set display+=lastline
 
-if &encoding ==# 'latin1' && has('gui_running')
-  set encoding=utf-8
-endif
+" if &encoding ==# 'latin1' && has('gui_running')
+"   set encoding=utf-8
+" endif
+set encoding=utf-8
 
 if &listchars ==# 'eol:$'
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
@@ -433,6 +511,8 @@ inoremap kj <Esc>
 " autocmd FileType html inoremap ;d <div></div><Space><++><Esc>FdT>i
 
 "-------------------------------------------------------------------------
+
+nnoremap <leader>e :Lex!<CR>
 
 " Edit vimrc and source file
 nnoremap confe :e $MYVIMRC<CR>
