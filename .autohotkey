@@ -1,0 +1,87 @@
+;****************************
+;*** Symbols modifiers ******
+;****************************
+; Symbol	Description
+; #	Win (Windows logo key)
+; !	Alt
+; ^	Ctrl
+; +	Shift
+; &	An ampersand may be used between any two keys or mouse buttons to combine them into a custom hotkey.
+
+
+;****************************
+;*** Vim navigation keys ***
+;****************************
+;!j::Send {Down}
+;return
+;!k::Send {Up}
+;return
+;!l::Send {Right}
+;return
+;!h::Send {Left}
+;return
+;!i::Send {Home}
+;return
+;!a::Send {End}
+;return
+
+
+;************************************************
+;**** Hold Control + h to register backspace ****
+;************************************************
+;^h::Send {BackSpace}
+;return
+
+;***********************************************
+;***************** Alt Tab *********************
+;***********************************************
+!e::!Tab
+return
+
+;************************************************
+;************ Webpage shortcuts *****************
+;************ Alt + Shift = !+  *****************
+;************************************************
+^m::Run https://gmail.com
+^,::Run https://keep.google.com/u/0/
+!.::Run https://calendar.google.com/calendar/r\
+!/::Run https://drive.google.com/drive/recent
+!'::Run https://old.reddit.com
+!;::Run https://to-do.live.com/tasks/inbox
+^.::Run https://app.simplenote.com/
+
+;*****************************************************
+;******** Tap to Escap and hold to Control ***********
+;*****************************************************
+; $~*Ctrl:: 
+; if !state 
+;	state :=  (GetKeyState("Shift", "P") ||  GetKeyState("Alt", "P") || GetKeyState("LWin", "P") || ; GetKeyState("RWin", "P"))
+; return 
+
+; $~ctrl up::
+; if instr(A_PriorKey, "control") && !state
+;	send {esc}
+; state := 0 
+; return 
+; ****************************************************
+
+
+; Modifier Changes
+; Insert::Home
+; CapsLock::MButton
+
+
+;*****************************************************
+;*** Sumatra pdf shortcuts when program is active ****
+; ****************************************************
+#IfWinActive ahk_class SUMATRA_PDF_FRAME
+{
+
+; control and shift and tab
+F2::^+tab
+
+; control and tab
+F4::^tab
+
+} 
+
