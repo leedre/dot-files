@@ -31,11 +31,11 @@ nnoremap Q @q
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin notes and trick
 " reload .vimrc and :pluginstall to install plugin.
-" plugdiff
-" plugstatus
-" plugupgrade
-" pluginstall
-" plugclean
+" PlugDiff
+" PlugStatus
+" PlugUpgrade
+" PlugInstall
+" PlugClean
 
 " Automatic plugin installation
 " Place before plug#begin() call
@@ -90,24 +90,25 @@ let mapleader = ","
 
 " Quit with leader key shortcut
 nnoremap <leader>q :q!<CR>
-" Writes to buffer and changes modification time
+" Writes to buffer and changes modification time even if you changed nothing
 " :x will not touch modification time and won't be re-saved
+" if file was unchanged
 nnoremap <leader>s :w<CR>
 
 " Map Fuzzy Search
-nmap <gf> :FZF<CR>
+nmap <leader><leader>f :FZF<CR>
 
 " --------------------------------------------
-" ------------- Terminal ---------------------
+" -------------- Terminal ---------------------
 " --------------------------------------------
 " Enter terminal
 nnoremap <leader>t :botright vertical terminal<CR>
-nnoremap <leader>,t :terminal<CR>
+nnoremap <leader><leader>t :terminal<CR>
 
 " --------------------------------------------
 " -----------   NERDTree ---------------------
 " --------------------------------------------
-" nnoremap <leader>n :NERDTreeFocus<CR>
+" nnoremap <leader>ng :NERDTreeFocus<CR>
 nnoremap <leader>n :NERDTreeToggle<CR>
 " nnoremap <leader>nf :NERDTreeFind<CR>
 " nnoremap <leader>N :NERDTree<CR>
@@ -116,10 +117,10 @@ nnoremap <leader>n :NERDTreeToggle<CR>
 "================================================
 "=============== Buffer Remaps ==================
 "================================================
-map gn :bn<cr>
-" map gp :bp<cr>
-" map gd :b#<cr>  
-" map gq :bw<cr>  
+map bn :bnext<cr>
+map bp :bp<cr>
+map bd :b#<cr>  
+map bq :bw<cr>  
 
 " Tab brings you to next buffer and shift-tab goes to previous buffer
 nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
@@ -204,7 +205,8 @@ set statusline=%{battery#component()}
 set tabline=%{battery#component()}
 let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
 " let g:airline_theme='angr'  
-let g:airline_theme='angr'  
+" set lighline theme inside lightline config
+" let g:lightline = { 'colorscheme': 'angr' }
 " Adds a unicode circle icon in bottom right
 let g:airline_section_z = '◉ ␤ % %l/%c'
 
@@ -256,14 +258,14 @@ function! ToggleRelativeNumber()
       set norelativenumber!
 endfunction
 
-map <leader>m :call ToggleRelativeNumber()<CR>
+map <leader>l :call ToggleRelativeNumber()<CR>
 
 function! ToggleLine()
       set norelativenumber
       set nonumber!
 endfunction
 
-map <leader>,m :call ToggleLine()<CR>
+map <leader>,l :call ToggleLine()<CR>
 
 " Multiple leader keys potential 
 " let mapleader=","
@@ -279,7 +281,7 @@ set smarttab
 
 " does the right thing (mostly) in programs
 " changes the width of the TAB character
-set tabstop=3
+set tabstop=4
 
 set smartindent
 
@@ -491,7 +493,7 @@ nnoremap de d$
 set pastetoggle=<f9>
 
 " remap kj to esc key
-inoremap kj <Esc>
+" inoremap kj <Esc>
 
 " remap Capslock to Esc
 " inoremap { {<CR>}<Esc>ko
@@ -501,7 +503,6 @@ inoremap kj <Esc>
 "	set t_Co=256
 "	endif
 
-
 "-------------------------------------------------------------------------
 " Commenting blocks of code.
 "-------------------------------------------------------------------------
@@ -509,7 +510,6 @@ inoremap kj <Esc>
 " set nocompatible
 " filetype plugin on
 
-" autocmd FileType c,cpp,html inoremap <Space><Space> <Esc>/<++><Enter>"_c4l
 " autocmd FileType c,cpp,html vnoremap <Space><Space> <Esc>/<++><Enter>"_c4l
 " autocmd FileType c,cpp,html map <Space><Space> <Esc>/<++><Enter>"_c4l
 
@@ -542,15 +542,16 @@ inoremap kj <Esc>
 
 "-------------------------------------------------------------------------
 
+" Exlorer splits to the right wheny add an exclamation mark
 nnoremap <leader>e :Lex!<CR>
 
 " Edit vimrc and source file
-nnoremap confe :e $MYVIMRC<CR>
+" nnoremap confe :e $MYVIMRC<CR>
 " Reload vims configuration file
-nnoremap confr :source $MYVIMRC<CR>
+" nnoremap confr :source $MYVIMRC<CR>
 
 " Leader mapping to source vimrc file
-nnoremap <Leader>vt :e $MYVIMRC<CR>
+" nnoremap <leader>vt :e $MYVIMRC<CR>
 " Reload vimrc configuration file
-nnoremap <Leader>sc :source $MYVIMRC<CR>
+nnoremap <leader>S :source $MYVIMRC<CR>
 "end
