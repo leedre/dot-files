@@ -1,6 +1,15 @@
+" start
 syntax on
 set fileformat=unix
 set cursorline
+
+" Change cursor shape in different modes
+" I had to add this after changing iterm2 to vertical cursor line
+" Must have set cursorline
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
 set mouse=a             " Allows mouse scrolling
 set scrolloff=99        " Keeps the current line in the middle when scroling and jumping through search results set clipboard=unnamed   " Yank and paste from vim to global clipboard
 " g~w                   " Toggle case entire word
@@ -11,7 +20,7 @@ set scrolloff=99        " Keeps the current line in the middle when scroling and
 
 " Exceute quicker macro or type @q without this remap.
 " As a bonus, use @: to replay the last ex command. (And then that becomes the "last used macro" that can be repeated with @@.)
-" Repeat macros by 3@q
+" Repeat macros by 4@q
 nnoremap Q @q
 
 " Enables @q in visual mode and paste macro at beginning of line
@@ -87,6 +96,13 @@ nnoremap <leader>s :w<CR>
 
 " Map Fuzzy Search
 nmap <gf> :FZF<CR>
+
+" --------------------------------------------
+" ------------- Terminal ---------------------
+" --------------------------------------------
+" Enter terminal
+nnoremap <leader>t :botright vertical terminal<CR>
+nnoremap <leader>,t :terminal<CR>
 
 " --------------------------------------------
 " -----------   NERDTree ---------------------
@@ -181,7 +197,7 @@ map <leader>g :Goyo \| set linebreak<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:airline#extensions#tabline#formatter = 'default'
 " Additionally, assign 1 to corresponding variables to immediately reflect the changes to statusline or tabline.let g:battery#update_tabline = 1    " For tabline.
-let g:battery#update_statusline = 1 " For statusline.
+" let g:battery#update_statusline = 1 " For statusline.
 
 let g:airline_powerline_fonts = 1
 set statusline=%{battery#component()}
@@ -189,12 +205,15 @@ set tabline=%{battery#component()}
 let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
 " let g:airline_theme='angr'  
 let g:airline_theme='angr'  
+" Adds a unicode circle icon in bottom right
+let g:airline_section_z = '◉ ␤ % %l/%c'
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""  Vim motion leader keys """""""""""""""" 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <leader>f <Plug>(easymotion-w)
 map <leader>F <Plug>(easymotion-b)
-map <leader>j <Plug>(easymotionj)
+map <leader>j <Plug>(easymotion-j)
 map <leader>k <Plug>(easymotion-k)
 map <leader>c <Plug>(easymotion-s)
 
@@ -237,14 +256,14 @@ function! ToggleRelativeNumber()
       set norelativenumber!
 endfunction
 
-map <leader>r :call ToggleRelativeNumber()<CR>
+map <leader>m :call ToggleRelativeNumber()<CR>
 
 function! ToggleLine()
       set norelativenumber
       set nonumber!
 endfunction
 
-map <leader>R :call ToggleLine()<CR>
+map <leader>,m :call ToggleLine()<CR>
 
 " Multiple leader keys potential 
 " let mapleader=","
@@ -386,13 +405,14 @@ set incsearch
 " the line, column, virtual, and relative position
 set ruler
 
-if !&scrolloff
-  set scrolloff=1
-endif
-if !&sidescrolloff
-  set sidescrolloff=5
-endif
-set display+=lastline
+" Uncomment if scrolling page seems buggy
+" if !&scrolloff
+"   set scrolloff=1
+" endif
+" if !&sidescrolloff
+"   set sidescrolloff=5
+" endif
+" set display+=lastline
 
 " if &encoding ==# 'latin1' && has('gui_running')
 "   set encoding=utf-8
@@ -448,14 +468,24 @@ endif
 " End of tpope's sensible plugin
 "--------------------------------------------------------------------
  
-" Yanks from the current position to end of matched word
-nnoremap ye vg_y
- 
 " Remaps ^ to B
 nnoremap B ^
 
 " Remaps g_ to E
 nnoremap E g_
+
+" Yanks from the current position to end of matched word
+nnoremap ye vg_y
+
+" Yanks from current position to beginning of non blank character because of
+" carrot sign
+nnoremap yb vg^y 
+
+" Deletes from current position to beginning of line
+nnoremap db d0
+
+" Deletes from current position to end of line
+nnoremap de d$
 
 " Press <F9> while in insert mode to stops indenting when pasting with the mouse
 set pastetoggle=<f9>
@@ -523,3 +553,4 @@ nnoremap confr :source $MYVIMRC<CR>
 nnoremap <Leader>vt :e $MYVIMRC<CR>
 " Reload vimrc configuration file
 nnoremap <Leader>sc :source $MYVIMRC<CR>
+"end

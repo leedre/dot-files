@@ -1,15 +1,20 @@
 # Hello message
 echo "\n---------------------------"
 echo " Hello from MacBook .zshrc"
+echo " brew update updates the above downloaded git repository with the latest code from GitHub."
+echo " brew upgrade updates the actual packages to match the versions in the updated local git repository."
+echo " copybuffer - control + o to copy buffer of current line before exec"
+echo " use Ctrl + XX to move between current position and start of line"
+echo " diff -r --side-by-side seq.txt seq2.txt "
+echo " ls -laR or ls -lAR" 
 echo "---------------------------\n"
-head -2 bible
+head -2 bible_verse
 
 # Make vim my EDITOR permanenty
 export EDITOR=vim
+export VISUAL=vim
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.  Initialization code that may require console input (password prompts, [y/n] confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -89,10 +94,12 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(
    zsh-autosuggestions
    copydir
-   dirhistory
+   # dirhistory
    copyfile
+   # Use copybuffer from current command line with ctrl + o
    copybuffer
-   vi-mode
+   web-search
+   # vi-mode
 )
 
 # User configuration
@@ -125,17 +132,38 @@ plugins=(
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 #ls alias
-alias l='ls -AF' # -A list all entries except for . and .. and sets for super user
-alias ll='ls -alF'
+# alias l='ls -AF' # -A list all entries except for . and .. and sets for super user
+# alias l='ls -CF' # -A list all entries except for . and .. and sets for super user
+# alias ll='ls -alF'
+# alias la='ls -A'
 # alias l='ls -AF' # -A list all entries except for . and .. and sets for super user
 # alias l='ls -C'  #-C force multi-column output and -f means output is not sorted
 # alias l='ls -Cf'  #-C force multi-column output and -f means output is not sorted
+
+# New alias that I copied from kali linux zshrc file
+alias ll='ls -lahF'
+alias la='ls -AF'
+alias l='ls -CF'
+alias li='ls -shitF'
+
+# ls alias for exa
+# alias l='exa'
+# alias la='exa -a'
+# alias ll='exa -lah'
+# alias ls='exa --color=auto'
+
+# bat replaces less for better syntax and highlighting
+alias less='bat'
 
 # Copy the PWD to the clipboard using pbcopy app
 alias cpwd="pwd | tr -d '\n' | pbcopy && echo 'pwd copied to clipboard'"
 
 # Create a folder and cd into it
 function mkcd() { mkdir -p "$@" && "$_"; }
+
+# Confirmation when moving or removing files
+alias mv='mv -i'
+alias rm='rm -i'
 
 # Create alias for git commands
 # alias gdca - git diff --cached
@@ -159,6 +187,7 @@ alias gcot='git checkout -t'
 alias gcotb='git checkout --track -b'
 alias glr='git --no-pager log --oneline'
 alias gl='git --no-pager log --oneline --reverse'
+alias gcd='git checkout -'
 #alias gll='git log --oneline --decorate --graph'
 alias gll='git --no-pager log'
 #alias glogp='git log --pretty=format:"%h %s" --graph'
@@ -172,6 +201,7 @@ alias zrc="$EDITOR $HOME/.zshrc"
 alias vrc="$EDITOR $HOME/.vimrc"
 
 # Source ~/.zshrc
+# Or type exec zsh in command line
 alias src="source $HOME/.zshrc"
 
 # Move pwd to $HOME 
@@ -184,7 +214,7 @@ alias b="cd ../"
 alias dl="cd /Users/leedre/Downloads"
 
 # Change directory to run control folder
-alias df="cd $HOME/.config/dot_files"
+alias dot="cd $HOME/.config/dot_files"
 
 # Change directory to config folder
 alias cf="cd $HOME/.config"
@@ -192,9 +222,36 @@ alias cf="cd $HOME/.config"
 # Change directory to last accessed folder just like alt + d function in CLUT extension
 alias d="cd -"
 
+# Brew services start and stop alias for yabai
+alias start='brew services start yabai'
+alias stop='brew services stop yabai'
+
+# Alias for yabai folder
+alias ybf='cd $HOME/.config/yabai'
+
+# Alias for yabairc
+alias ybrc="cd $HOME/.config/yabai ; vim yabairc"
+
+# Alias for skhd folder
+alias skf='cd $HOME/.config/skhd'
+
+# Alias for skhdrc
+alias skrc="cd $HOME/.config/skhd ; vim skhdrc "
+
+# Alias reload yabai
+alias reload="stop && start"
+
+# Alias cat to bat
+alias cat='bat --style=plain'
+
 # Alias syntax 
 # alias <flag> <alias_name>="command"
 
+# Run last command
+# alias again="!!"
+
+# Get ip address for macos
+alias ipadd="ipconfig getifaddr en0"
 #Key Bindings
 #This plugin provides a few widgets that you can use with bindkey:
 
@@ -214,8 +271,14 @@ alias d="cd -"
 # VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
 # VI_MODE_SET_CURSOR=true
 
-source $ZSH/oh-my-zsh.sh
-
 # Warning: Homebrew's sbin was not found in your PATH but you have installed
 # The fix was this:
 export PATH="/usr/local/sbin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Sources zsh shell syntax highlighting which must be at the end of the file
+# source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /Users/leedre/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+source $ZSH/oh-my-zsh.sh
