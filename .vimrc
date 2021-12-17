@@ -10,6 +10,12 @@ let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
+" Finally fixed lag between mode change
+" thanks to stackoverflow's post
+set ttimeout
+set ttimeoutlen=1
+set ttyfast
+
 set mouse=a             " Allows mouse scrolling
 set scrolloff=99        " Keeps the current line in the middle when scroling and jumping through search results set clipboard=unnamed   " Yank and paste from vim to global clipboard
 " g~w                   " Toggle case entire word
@@ -56,6 +62,9 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'preservim/nerdtree'
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-easymotion.vim'
+" Plug 'justinmk/vim-sneak'
 """"""""""""""""""""""""
 """""" Themes """"""""""
 """"""""""""""""""""""""
@@ -120,7 +129,13 @@ nnoremap <leader>n :NERDTreeToggle<CR>
 map bn :bnext<cr>
 map bp :bp<cr>
 map bd :b#<cr>  
-map bq :bw<cr>  
+map bq :bw<cr>
+
+" :vert sb N(buffer #)
+" :vert belowright sb N(buffer #)
+" or try :vsp | b1
+map bv :vertical sb
+map bs :sb
 
 " Tab brings you to next buffer and shift-tab goes to previous buffer
 nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
@@ -194,30 +209,87 @@ map <leader>g :Goyo \| set linebreak<CR>
 "<em>Hello</em> world!
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""" incsearch easymotion""""""""""""""""""" 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map z/ <Plug>(incsearch-easymotion-/)
+map z? <Plug>(incsearch-easymotion-?)
+map zg/ <Plug>(incsearch-easymotion-stay)
+
+" incsearch.vim x fuzzy x vim-easymotion
+" function! s:config_easyfuzzymotion(...) abort
+"   return extend(copy({
+"   \   'converters': [incsearch#config#fuzzy#converter()],
+"   \   'modules': [incsearch#config#easymotion#module()],
+"   \   'keymap': {"\<CR>": '<Over>(easymotion)'},
+"   \   'is_expr': 0,
+"   \   'is_stay': 1
+"   \ }), get(a:, 1, {}))
+" endfunction
+
+" noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""" incsearch pluging """"""""""""""""""" 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+
+" <Plug>(incsearch-stay) doesn't move the cursor
+" map g/ <Plug>(incsearch-stay)
+
+" Enable search highlighting
+set hlsearch
+
+" :h g:incsearch#auto_nohlsearch
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""" Vim airline""""""""""""" 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:airline#extensions#tabline#formatter = 'default'
-" Additionally, assign 1 to corresponding variables to immediately reflect the changes to statusline or tabline.let g:battery#update_tabline = 1    " For tabline.
-" let g:battery#update_statusline = 1 " For statusline.
+" Additionally, assign 1 to corresponding variables to immediately reflect the
+" changes to statusline or tabline.let g:battery#update_tabline = 1
+" For tabline.  let g:battery#update_statusline = 1 " For statusline.
 
+" That'll display whitespace chars. You can toggle it with :set invlist. 
+set list          " Display unprintable characters f12 - switches
+" :airlineToggleWhitespace
+" To turn off the trailing whitespace check at startup, add to your vimrc:
+" Adds a unicode circle icon in bottom right
+" let g:airline_section_z = '◉ ␤ % %l/%c'
+
+let g:airline#extensions#whitespace#enabled = 0
+" Displays white list as circle icon during insert mode, but turned it off
+" because it was distracting
+" set listchars=tab:•\ ,trail:•,extends:»,precedes:« " Unprintable chars mapping
 let g:airline_powerline_fonts = 1
 set statusline=%{battery#component()}
 set tabline=%{battery#component()}
 let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
-" let g:airline_theme='angr'  
+" let g:airline_theme='angr'
 " set lighline theme inside lightline config
 " let g:lightline = { 'colorscheme': 'angr' }
-" Adds a unicode circle icon in bottom right
-let g:airline_section_z = '◉ ␤ % %l/%c'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""  Vim motion leader keys """""""""""""""" 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>f <Plug>(easymotion-w)
-map <leader>F <Plug>(easymotion-b)
+" Searches words
+" map <leader>f <Plug>(easymotion-w)
+" Searches characters with bi-direction
+map <leader>c <Plug>(easymotion-s)
+" Searches words with bi-direciton
+map <leader>f <Plug>(easymotion-bd-w)
+" map <leader>F <Plug>(easymotion-b)
+" Searches first lines
 map <leader>j <Plug>(easymotion-j)
 map <leader>k <Plug>(easymotion-k)
-map <leader>c <Plug>(easymotion-s)
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""" Vim Object Indentation """""""""""""" 
@@ -297,6 +369,11 @@ set softtabstop=4
 " Use <ENTER> key to create new lines in normal mode
 nnoremap <CR> o<Esc>
 
+" No more holding shift + semicolon key to enter command mode
+" Semicolon alone brings you to command mode
+nnoremap ; : 
+nnoremap ; : 
+
 " Use [ and <space> to make new line
 " nnoremap <silent> [<space>  :<c-u>put!=repeat([''],v:count)<bar>']+1<cr>
 " nnoremap <silent> ]<space>  :<c-u>put =repeat([''],v:count)<bar>'[-1<cr>
@@ -314,12 +391,7 @@ set smartcase
 " Starts searching before pressing enter
 set incsearch
 
-" enable search highlighting
-set hlsearch
-
-" Uncommenting this causes vimrc to start in replace mode
-" This unsets the "last search pattern" register by hitting return
-" nnoremap <silent> <ESC> :nohlsearch<CR>
+" Farewell, nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>! This feature turns 'hlsearch' off automatically after searching-related motions.
 
 " Removes highlights texts
 map <leader>h :noh<CR>
