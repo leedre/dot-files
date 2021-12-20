@@ -6,7 +6,8 @@ echo " brew upgrade updates the actual packages to match the versions in the upd
 echo " copybuffer - control + o to copy buffer of current line before exec"
 echo " use Ctrl + XX to move between current position and start of line"
 echo " diff -r --side-by-side seq.txt seq2.txt "
-echo " ls -laR or ls -lAR" 
+echo ' ls -laR or ls -lAR'
+echo " ping -c 3 google.com"
 echo "---------------------------\n"
 head -2 bible_verse
 
@@ -131,6 +132,9 @@ plugins=(
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+#===============================================================
+#=========================== Alias =============================
+#===============================================================
 #ls alias
 # alias l='ls -AF' # -A list all entries except for . and .. and sets for super user
 # alias l='ls -CF' # -A list all entries except for . and .. and sets for super user
@@ -145,12 +149,15 @@ alias ll='ls -lahF'
 alias la='ls -AF'
 alias l='ls -CF'
 alias li='ls -shitF'
+alias lm='ls -ltr'
+alias lss='ls -R'
 
 # ls alias for exa
 # alias l='exa'
 # alias la='exa -a'
 # alias ll='exa -lah'
 # alias ls='exa --color=auto'
+# alias ls='ls --classify --tabsize=0 --group-directories-first --literal --color=auto --show-control-chars --human-readable'
 
 # bat replaces less for better syntax and highlighting
 alias less='bat'
@@ -162,9 +169,13 @@ alias cpwd="pwd | tr -d '\n' | pbcopy && echo 'pwd copied to clipboard'"
 function mkcd() { mkdir -p "$@" && "$_"; }
 
 # Confirmation when moving or removing files
-alias mv='mv -i'
-alias rm='rm -i'
+# verbose  flag displays message
+alias mv='mv -vn'
+alias rm='rm -iv'
 
+#==============================================================
+#======================== Git Alias ===========================
+#==============================================================
 # Create alias for git commands
 # alias gdca - git diff --cached
 # gpf! - git push --force
@@ -177,7 +188,7 @@ alias gaa='git add .'
 alias gd='git diff | mate'
 #alias gau='git add --update'
 #alias gc='git commit -m'
-alias gc='git commit -v'      # -v flag aka --verbose shows the diff of the change 
+alias gc='git commit -v'      # -v flag aka --verbose shows the diff of the change
 alias gca='git commit -v -a'
 alias gb='git --no-pager branch'
 alias gba='git --no-pager  branch -a'
@@ -194,6 +205,11 @@ alias gll='git --no-pager log'
 #alias glog='git --no-pager log -n 20 --pretty=format:%h%x09%an%x09%ad%x09%s --date=short --no-merges'
 alias glog='git rev-list --all --pretty=oneline'
 
+
+#==============================================================
+#======================== Folder Alias ========================
+#==============================================================
+
 # Alias to open .zshrc from any pwd
 alias zrc="$EDITOR $HOME/.zshrc"
 
@@ -202,9 +218,9 @@ alias vrc="$EDITOR $HOME/.vimrc"
 
 # Source ~/.zshrc
 # Or type exec zsh in command line
-alias src="source $HOME/.zshrc"
+alias so="source $HOME/.zshrc"
 
-# Move pwd to $HOME 
+# Move pwd to $HOME
 alias h="cd $HOME/"
 
 # Shortcut for cd ..
@@ -222,9 +238,11 @@ alias cf="cd $HOME/.config"
 # Change directory to last accessed folder just like alt + d function in CLUT extension
 alias d="cd -"
 
-# Brew services start and stop alias for yabai
-alias start='brew services start yabai'
-alias stop='brew services stop yabai'
+# Alias cat to bat
+alias cat='bat --style=plain'
+
+# Alias c to cat
+alias c='bat'
 
 # Alias for yabai folder
 alias ybf='cd $HOME/.config/yabai'
@@ -238,13 +256,14 @@ alias skf='cd $HOME/.config/skhd'
 # Alias for skhdrc
 alias skrc="cd $HOME/.config/skhd ; vim skhdrc "
 
+# Brew services start and stop alias for yabai
+alias start='brew services start yabai'
+alias stop='brew services stop yabai'
+
 # Alias reload yabai
 alias reload="stop && start"
 
-# Alias cat to bat
-alias cat='bat --style=plain'
-
-# Alias syntax 
+# Alias syntax
 # alias <flag> <alias_name>="command"
 
 # Run last command
@@ -252,20 +271,6 @@ alias cat='bat --style=plain'
 
 # Get ip address for macos
 alias ipadd="ipconfig getifaddr en0"
-#Key Bindings
-#This plugin provides a few widgets that you can use with bindkey:
-
-#autosuggest-accept: Accepts the current suggestion.
-#autosuggest-execute: Accepts and executes the current suggestion.
-#autosuggest-clear: Clears the current suggestion.
-#autosuggest-fetch: Fetches a suggestion (works even when suggestions are disabled).
-#autosuggest-disable: Disables suggestions.
-#autosuggest-enable: Re-enables suggestions.
-#autosuggest-toggle: Toggles between enabled/disabled suggestions.
-#For example, this would bind ctrl + space to accept the current suggestion.
-
-# Control + space accepts autosuggest
-# bindkey '^ ' autosuggest-accept
 
 # Plugin vi-mode 
 # VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
