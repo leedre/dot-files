@@ -14,10 +14,8 @@
 " - Hit tab to :find by partial match
 " - Use * to make it fuzzy
 " Find keycodes from command mode :help keycodes
-"
-" What's the difference between syntax enable and on 
+
 syntax enable
-" syntax on
 set fileformat=unix
 set cursorline
 
@@ -27,6 +25,9 @@ set cursorline
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+" Toggles cursorline between normal and insert mode
+autocmd InsertEnter,InsertLeave * set cul!
 
 " Finally fixed lag between mode change
 " thanks to stackoverflow's post
@@ -83,6 +84,9 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'preservim/nerdtree'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 " Plug 'justinmk/vim-sneak'
 "
 "================================================
