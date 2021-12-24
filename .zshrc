@@ -2,7 +2,7 @@
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
 setopt autocd              # change directory just by typing its name
-setopt correct            # auto correct mistakes Kali default had this commented out
+# setopt correct            # auto correct mistakes Kali default had this commented out
 setopt interactivecomments # allow comments in interactive mode
 setopt magicequalsubst     # enable filename expansion for arguments of the form ‘anything=expression’
 setopt nonomatch           # hide error message if there is no match for the pattern
@@ -95,7 +95,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 configure_prompt() {
-    prompt_symbol=㉿
+    prompt_symbol=💀
     [ "$EUID" -eq 0 ] && prompt_symbol=💀
     case "$PROMPT_ALTERNATIVE" in
         twoline)
@@ -269,107 +269,13 @@ echo " ls -laR or ls -lAR"
 echo "---------------------------\n"
 # head -2 bible_verse
 
-# Make vim my EDITOR permanenty
-# export EDITOR=vim
-# export VISUAL=vim
-
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-#ls alias
-# alias l='ls -AF' # -A list all entries except for . and .. and sets for super user
-# alias l='ls -CF' # -A list all entries except for . and .. and sets for super user
-# alias ll='ls -alF'
-# alias la='ls -A'
-# alias l='ls -AF' # -A list all entries except for . and .. and sets for super user
-# alias l='ls -C'  #-C force multi-column output and -f means output is not sorted
-# alias l='ls -Cf'  #-C force multi-column output and -f means output is not sorted
-
-# New alias that I copied from kali linux zshrc file
-alias ll='ls -lahF'
-alias la='ls -AF'
-alias l='ls -CF'
-alias li='ls -shitF'
-
-# ls alias for exa
-# alias l='exa'
-# alias la='exa -a'
-# alias ll='exa -lah'
-# alias ls='exa --color=auto'
-
-# bat replaces less for better syntax and highlighting
-alias less='bat'
-
-# Create a folder and cd into it
-function mkcd() { mkdir -p "$@" && "$_"; }
-
-# Confirmation when moving or removing files
-alias mv='mv -i'
-alias rm='rm -i'
-
-# Create alias for git commands
-# alias gdca - git diff --cached
-# gpf! - git push --force
-# grhh - git reset --hard
-alias gs='git status -sb'    # Displays 2 lines with branch and untracked file
-alias gss='git status'
-alias gpull='git pull'
-alias gpush='git push'
-alias gaa='git add .'
-alias gd='git diff | mate'
-#alias gau='git add --update'
-#alias gc='git commit -m'
-alias gc='git commit -v'      # -v flag aka --verbose shows the diff of the change 
-alias gca='git commit -v -a'
-alias gb='git --no-pager branch'
-alias gba='git --no-pager  branch -a'
-alias gco='git checkout'
-alias gcob='git checkout -b'
-alias gcot='git checkout -t'
-alias gcotb='git checkout --track -b'
-alias glr='git --no-pager log --oneline'
-alias gl='git --no-pager log --oneline --reverse'
-alias gcd='git checkout -'
-#alias gll='git log --oneline --decorate --graph'
-alias gll='git --no-pager log'
-#alias glogp='git log --pretty=format:"%h %s" --graph'
-#alias glog='git --no-pager log -n 20 --pretty=format:%h%x09%an%x09%ad%x09%s --date=short --no-merges'
-alias glog='git rev-list --all --pretty=oneline'
-
-# Alias to open .zshrc from any pwd
-alias zrc="$EDITOR $HOME/.zshrc"
-
-# Alias to open .vimrc from any pwd
-alias vrc="$EDITOR $HOME/.vimrc"
-
-# Source ~/.zshrc
-# Or type exec zsh in command line
-alias src="source $HOME/.zshrc"
-
-# Move pwd to $HOME 
-alias h="cd $HOME/"
-
-# Shortcut for cd ..
-alias b="cd ../"
-
-# Change directory to MacOS downloads folder
-alias dl="cd /Users/leedre/Downloads"
-
-# Change directory to run control folder
-alias dot="cd $HOME/.config/dot_files"
-
-# Change directory to config folder
-alias cf="cd $HOME/.config"
-
-# Change directory to last accessed folder just like alt + d function in CLUT extension
-alias d="cd -"
-
-# Alias cat to bat
-# alias cat='bat --style=plain'
-
-# Run last command
-# alias again="!!"
+# Load aliases
+[ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 
 # Get ip address for macos
 # alias ipadd="ipconfig getifaddr en0"
-source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source "$HOME/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
