@@ -1,5 +1,21 @@
 " start
-syntax on
+" New stuff to try out
+" FINDING FILES:
+
+" Search down into subfolders
+" Provides tab-completion for all file-related tasks
+" set path+=**
+
+" Display all matching files when we tab complete
+" It's already set later in this file
+" set wildmenu
+
+" NOW WE CAN:
+" - Hit tab to :find by partial match
+" - Use * to make it fuzzy
+" Find keycodes from command mode :help keycodes
+
+syntax enable
 set fileformat=unix
 set cursorline
 
@@ -9,6 +25,9 @@ set cursorline
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+" Toggles cursorline between normal and insert mode
+autocmd InsertEnter,InsertLeave * set cul!
 
 " Finally fixed lag between mode change
 " thanks to stackoverflow's post
@@ -32,9 +51,10 @@ nnoremap Q @q
 " Enables @q in visual mode and paste macro at beginning of line
 " vnoremap Q :normal! @q<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""e
+
+"================================================
 """"""""""""""""" vim-plug """"""""""""""""""""""" 
-""""""""""""""""""""""""""""""""""""""""""""""""""
+"================================================
 " Plugin notes and trick
 " reload .vimrc and :pluginstall to install plugin.
 " PlugDiff
@@ -64,10 +84,14 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'preservim/nerdtree'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 " Plug 'justinmk/vim-sneak'
-""""""""""""""""""""""""
+"
+"================================================
 """""" Themes """"""""""
-""""""""""""""""""""""""
+"================================================
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes' 
 Plug 'arcticicestudio/nord-vim'
@@ -79,9 +103,9 @@ if (has("termguicolors"))
  set termguicolors
 endif
 
-" --------------------------------------------
-" ----------- Color theme --------------------
-" --------------------------------------------
+"================================================
+" ====---- Color theme =========--
+"================================================
 " activate the theme by adding colorscheme <name-of-theme> 
 " or change it on-the-fly by running :colorscheme <name-of-theme>
 " Tender theme plugin
@@ -91,15 +115,39 @@ colorscheme tender
 " let g:airline_theme = 'codedark'
 " colorscheme codedark
 
-" --------------------------------------------
-" ----------- Leader keys --------------------
-" --------------------------------------------
+"================================================
+" ====---- Replace word =========-
+"================================================
+" Remap <Control - r> to replace every word on current line
+nnoremap <C-l> :s///g<left><left><left>
+
+" Change only whole words exactly matching 'foo' to 'bar'; ask for confirmation.
+" :%s/\<foo\>/bar/gc
+" Remap <Control - R> to replace all words in current file
+nnoremap <C-r> :%s///gc<left><left><left>
+
+" Find each occurrence of 'foo' (in all lines), and replace it with 'bar'.
+" :%s/foo/bar/g
+
+" Find each occurrence of 'foo' (in the current line only), and replace it with 'bar'.
+" :s/foo/bar/g
+
+" Change each 'foo' to 'bar', but ask for confirmation first.
+" :%s/foo/bar/gc
+
+"================================================
+" ====---- Leader keys =========--
+"================================================
 " Map leader key to comma (,)
 let mapleader = ","
 
 " Quit with leader key shortcut
+" Shortcut is ZQ
 nnoremap <leader>q :q!<CR>
+
 " Writes to buffer and changes modification time even if you changed nothing
+" If you quit via :wq, the modification time will change as the file is
+" technically rewritten.
 " :x will not touch modification time and won't be re-saved
 " if file was unchanged
 nnoremap <leader>s :w<CR>
@@ -107,16 +155,16 @@ nnoremap <leader>s :w<CR>
 " Map Fuzzy Search
 nmap <leader><leader>f :FZF<CR>
 
-" --------------------------------------------
-" -------------- Terminal ---------------------
-" --------------------------------------------
+"================================================
+" =======- Terminal =========---
+"================================================
 " Enter terminal
 nnoremap <leader>t :botright vertical terminal<CR>
 nnoremap <leader><leader>t :terminal<CR>
 
-" --------------------------------------------
-" -----------   NERDTree ---------------------
-" --------------------------------------------
+"================================================
+" ====----   NERDTree =========---
+"================================================
 " nnoremap <leader>ng :NERDTreeFocus<CR>
 nnoremap <leader>n :NERDTreeToggle<CR>
 " nnoremap <leader>nf :NERDTreeFind<CR>
@@ -145,14 +193,15 @@ nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :wri
 " press enter
 nnoremap <leader>b :ls<CR>:b<Space>
 
-" --------------------------------------------
-" --------- Goyo Plugin toggle ---------------
-" --------------------------------------------
+
+"================================================
+" ====-- Goyo Plugin toggle ======---
+"================================================
 map <leader>g :Goyo \| set linebreak<CR>
 
-" --------------------------------------------
-" ------------- gitgutter ----- --------------
-" --------------------------------------------
+"================================================
+" ======= gitgutter ----- ======--
+"================================================
 " You can explicitly turn vim-gitgutter off and on (defaults to on):
 
 " turn off with :GitGutterDisable
@@ -174,9 +223,9 @@ map <leader>g :Goyo \| set linebreak<CR>
 " turn off with :GitGutterLineHighlightsDisable
 " toggle with :GitGutterLineHighlightsToggle.
 
-" --------------------------------------------
-" ------------- tpope Surround  --------------
-" --------------------------------------------
+"================================================
+" ======= tpope Surround  ======--
+"================================================
 "It's easiest to explain with examples. Press cs"' inside
 
 ""Hello world!"
@@ -208,9 +257,9 @@ map <leader>g :Goyo \| set linebreak<CR>
 
 "<em>Hello</em> world!
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"================================================
 """"""""""""""" incsearch easymotion""""""""""""""""""" 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"================================================
 map z/ <Plug>(incsearch-easymotion-/)
 map z? <Plug>(incsearch-easymotion-?)
 map zg/ <Plug>(incsearch-easymotion-stay)
@@ -228,9 +277,9 @@ map zg/ <Plug>(incsearch-easymotion-stay)
 
 " noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
 "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"======================================================
 """"""""""""""""" incsearch pluging """"""""""""""""""" 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"======================================================
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 
@@ -249,9 +298,10 @@ map #  <Plug>(incsearch-nohl-#)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"================================================
 """"""""""""""""" Vim airline""""""""""""" 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"================================================
 " let g:airline#extensions#tabline#formatter = 'default'
 " Additionally, assign 1 to corresponding variables to immediately reflect the
 " changes to statusline or tabline.let g:battery#update_tabline = 1
@@ -277,7 +327,11 @@ let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
 " let g:lightline = { 'colorscheme': 'angr' }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"================================================
 """"""""""""""  Vim motion leader keys """""""""""""""" 
+
+"================================================
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Searches words
 " map <leader>f <Plug>(easymotion-w)
@@ -292,7 +346,9 @@ map <leader>k <Plug>(easymotion-k)
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
+"================================================
 """"""""""""""""" Vim Object Indentation """""""""""""" 
+"================================================
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vii selects all lines at the same indentation level as the current line.
 " vii (goes into visual mode and selects the body of a try clause), ii (widens the selection to the entire method), ii (widens the selection again, to the entire class body), ii (widens the selection to also include the class signature). after this, further ii’s start selecting lines and blocks above the class.
@@ -301,9 +357,9 @@ map <leader>k <Plug>(easymotion-k)
 "
 " you can combine the ai, ii and ai text objects with other operators besides v for visual mode, e.g. cii, dii, yii etc. for example >ii or <ii will indent or dedent an indented block. if you have vim-commentary installed then gcii will comment out an indented block.
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"================================================
 """"""""""""""""" Vim Commentary """""""""""""""""""""" 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"================================================
 " vim-commentarty installed in tpope vim/pack/tpope/
 " Comment stuff out. Use gcc to comment out a line (takes a count), gc to comment out the target of a motion (for example, gcap to comment out a paragraph), gc in visual mode to comment out the selection, and gc in operator pending mode to target a comment. You can also use it as a command, either with a range like :7,17Commentary
 " My favorite file type isn't supported!
@@ -441,9 +497,9 @@ set wildmode=list:longest,full
 " you can add it to your wrong word list by typing <zw> (zuw to undo).
 map <leader>5 :setlocal spell! spelllang=en_us<CR>
 
-"--------------------------------------------------------------------
+"==================================-
 " Beginning of tpope's sensible plugin
-"--------------------------------------------------------------------
+"==================================-
 
 if has('autocmd')
   filetype plugin indent on
@@ -538,9 +594,9 @@ endif
 
 " vim:set ft=vim et sw=2:
 
-"--------------------------------------------------------------------
+"==================================-
 " End of tpope's sensible plugin
-"--------------------------------------------------------------------
+"==================================-
  
 " Remaps ^ to B
 nnoremap B ^
@@ -575,9 +631,9 @@ set pastetoggle=<f9>
 "	set t_Co=256
 "	endif
 
-"-------------------------------------------------------------------------
+"=====================================
 " Commenting blocks of code.
-"-------------------------------------------------------------------------
+"=====================================
 
 " set nocompatible
 " filetype plugin on
@@ -595,9 +651,9 @@ set pastetoggle=<f9>
 
 " autocmd FileType apache setlocal commentstring=#\ %s
 
-"-------------------------------------------------------------------------
+"=====================================
 " HTML vimrc
-"-------------------------------------------------------------------------
+"=====================================
 
 " autocmd FileType html inoremap ;b <b></b><Space><++><Esc>FbT>i
 " autocmd FileType html inoremap ;i <em></em><Space><++><Esc>FeT>i
@@ -612,17 +668,12 @@ set pastetoggle=<f9>
 " autocmd FileType html inoremap ;c <!----><Space><++><Esc>
 " autocmd FileType html inoremap ;d <div></div><Space><++><Esc>FdT>i
 
-"-------------------------------------------------------------------------
+"=====================================
 
 " Exlorer splits to the right wheny add an exclamation mark
 nnoremap <leader>e :Lex!<CR>
 
 " Edit vimrc and source file
-" nnoremap confe :e $MYVIMRC<CR>
-" Reload vims configuration file
-" nnoremap confr :source $MYVIMRC<CR>
-
-" Leader mapping to source vimrc file
 " nnoremap <leader>vt :e $MYVIMRC<CR>
 " Reload vimrc configuration file
 nnoremap <leader>S :source $MYVIMRC<CR>
