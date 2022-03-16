@@ -1,3 +1,6 @@
+#===============================================================
+#=========================== Alias =============================
+#===============================================================
 #ls alias
 # alias l='ls -AF' # -A list all entries except for . and .. and sets for super user
 # alias l='ls -CF' # -A list all entries except for . and .. and sets for super user
@@ -12,23 +15,36 @@ alias ll='ls -lahF'
 alias la='ls -AF'
 alias l='ls -CF'
 alias li='ls -shitF'
+alias lm='ls -ltr'
+alias lss='ls -R'
 
+# alias lst="'ls -R | grep ":$" | sed -e '"'"'s/:$//'"'"' -e '"'"'s/[^-][^\/]*\//--/g'"'"' -e '"'"'s/^/   /'"'"' -e '"'"'s/-/|/'"'"'' "
 # ls alias for exa
 # alias l='exa'
 # alias la='exa -a'
 # alias ll='exa -lah'
 # alias ls='exa --color=auto'
+# alias ls='ls --classify --tabsize=0 --group-directories-first --literal --color=auto --show-control-chars --human-readable'
 
+# alias lst=" ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/' "
+# alias lst="ls -R | grep ":$" | sed -e '"'"'s/:$//'"'"' -e '"'"'s/[^-][^\/]*\//--/g'"'"' -e '"'"'s/^/   /'"'"' -e '"'"'s/-/|/'"'"'' "
 # bat replaces less for better syntax and highlighting
 alias less='bat'
+
+# Copy the PWD to the clipboard using pbcopy app
+alias cpwd="pwd | tr -d '\n' | pbcopy && echo 'pwd copied to clipboard'"
 
 # Create a folder and cd into it
 function mkcd() { mkdir -p "$@" && "$_"; }
 
 # Confirmation when moving or removing files
-alias mv='mv -i'
-alias rm='rm -i'
+# verbose  flag displays message
+alias mv='mv -vn'
+alias rm='rm -iv'
 
+#==============================================================
+#======================== Git Alias ===========================
+#==============================================================
 # Create alias for git commands
 # alias gdca - git diff --cached
 # gpf! - git push --force
@@ -41,12 +57,12 @@ alias gaa='git add .'
 alias gd='git diff | mate'
 #alias gau='git add --update'
 #alias gc='git commit -m'
-alias gc='git commit -v'      # -v flag aka --verbose shows the diff of the change 
+alias gc='git commit -v'      # -v flag aka --verbose shows the diff of the change
 alias gca='git commit -v -a'
 alias gb='git --no-pager branch'
 alias gba='git --no-pager  branch -a'
 alias gco='git checkout'
-alias gcob='git checkout -b'
+alias gcob='git checkout -b'   # or git branch testing
 alias gcot='git checkout -t'
 alias gcotb='git checkout --track -b'
 alias glr='git --no-pager log --oneline'
@@ -54,9 +70,16 @@ alias gl='git --no-pager log --oneline --reverse'
 alias gcd='git checkout -'
 #alias gll='git log --oneline --decorate --graph'
 alias gll='git --no-pager log'
+alias grs='git remote show'
+alias grso='git remote show origin'
 #alias glogp='git log --pretty=format:"%h %s" --graph'
 #alias glog='git --no-pager log -n 20 --pretty=format:%h%x09%an%x09%ad%x09%s --date=short --no-merges'
 alias glog='git rev-list --all --pretty=oneline'
+
+
+#==============================================================
+#================= Folder NavigationAlias =====================
+#==============================================================
 
 # Alias to open .zshrc from any pwd
 alias zrc="$EDITOR $HOME/.zshrc"
@@ -64,24 +87,33 @@ alias zrc="$EDITOR $HOME/.zshrc"
 # Alias to open .vimrc from any pwd
 alias vrc="$EDITOR $HOME/.vimrc"
 
+# I don't like typing vim everytime
+alias v="vim"
+
+# Open vim as sudo
+alias sv='sudo vim'
+
+# Display directory history options
+alias dir='dirs -v | head -10'
+
 # Source ~/.zshrc
 # Or type exec zsh in command line
-alias src="source $HOME/.zshrc"
+alias so="source $HOME/.zshrc"
 
-# Move pwd to $HOME 
-alias h="cd $HOME/"
+# Move pwd to $HOME
+alias h="cd $HOME/ ; ls -F"
 
 # Shortcut for cd ..
 alias b="cd ../"
 
 # Change directory to MacOS downloads folder
-alias dl="cd /Users/leedre/Downloads"
+alias dl="cd /Users/leedre/Downloads ; ls -F"
 
 # Change directory to run control folder
-alias dot="cd $HOME/.config/dot_files"
+alias dot="cd $HOME/.config/dot_files ; ls -F"
 
 # Change directory to config folder
-alias cf="cd $HOME/.config"
+alias cf="cd $HOME/.config ; ls -F"
 
 # Change directory to last accessed folder just like alt + d function in CLUT extension
 alias d="cd -"
@@ -89,5 +121,52 @@ alias d="cd -"
 # Alias cat to bat
 # alias cat='bat --style=plain'
 
-# Run last command
-# alias again='!!'
+# Alias c to cat
+alias c='bat'
+
+# Alias for yabai folder
+alias ybf='cd $HOME/.config/yabai'
+
+# Alias for yabairc
+alias ybrc="cd $HOME/.config/yabai ; vim yabairc ; cd -"
+
+# Alias for skhd folder
+alias skf='cd $HOME/.config/skhd'
+
+# Alias for skhdrc
+alias skrc="cd $HOME/.config/skhd ; vim skhdrc ; cd - "
+
+# Alias to aliasrc file
+alias als="cd $HOME/.config ; vim aliasrc ; cd -"
+
+# Alias to reminder zsh message file
+alias reminder="cd $HOME/.config ; tail -n +4 reminder | cut -d ' ' -f 3-10 ; cd -"
+
+# SSH to my web server located in .config
+alias sshaws="ssh -i ~/ubuntu_new_key_private.pem ubuntu@ec2-54-209-12-87.compute-1.amazonaws.com"
+
+# Copy files between local and remote host
+alias scpp="scp -i ~/ubuntu_new_key_private.pem ~/ale/test_outerspacedev/index.html ubuntu@outerspacedev.com:~/index.html"
+
+# Alias to ~/developer folder
+alias dev="cd $HOME/developer ; ls -F"
+
+#=============================================================
+#=============== END OF FOLDER NAVIGATION ALIAS ==============
+#=============================================================
+
+# Brew services start and stop alias for yabai
+alias start='brew services start yabai'
+alias stop='brew services stop yabai'
+
+# Alias reload yabai
+alias reload="stop && start"
+
+# Alias syntax
+# alias <flag> <alias_name>="command"
+
+# Get ip address for macos
+alias ipadd="ipconfig getifaddr en0"
+
+# Show my ip address
+alias myip="curl http://ipecho.net/plain; echo"
