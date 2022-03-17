@@ -1,8 +1,11 @@
-# Kali zshrc
+#========================================================================================================
+#=================================== Start of Kali zshrc ==================================================
+#========================================================================================================
+
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
 setopt autocd              # change directory just by typing its name
-setopt correct            # auto correct mistakes Kali default had this commented out
+# setopt correct            # auto correct mistakes Kali default had this commented out
 setopt interactivecomments # allow comments in interactive mode
 setopt magicequalsubst     # enable filename expansion for arguments of the form ‘anything=expression’
 setopt nonomatch           # hide error message if there is no match for the pattern
@@ -21,7 +24,7 @@ PROMPT_EOL_MARK=""
 
 # configure key keybindings
 # bindkey -e                                        # emacs key bindings
-bindkey ' ' magic-space                           # do history expansion on space
+# bindkey ' ' magic-space                           # do history expansion on space
 # bindkey '^[[3;5~' kill-word                       # ctrl + Supr
 # bindkey '^[[3~' delete-char                       # delete
 # bindkey '^[[1;5C' forward-word                    # ctrl + ->
@@ -30,9 +33,9 @@ bindkey ' ' magic-space                           # do history expansion on spac
 # bindkey '^[[6~' end-of-buffer-or-history          # page down
 # bindkey '^[[H' beginning-of-line                  # home
 # bindkey '^[[F' end-of-line                        # end
-bindkey '^[[Z' undo                               # shift + tab undo last action
+# bindkey '^[[Z' undo                               # shift + tab undo last action
 
-# enable completion features
+# enable command completion features
 autoload -Uz compinit
 compinit -d ~/.cache/zcompdump
 zstyle ':completion:*:*:*:*:*' menu select
@@ -95,8 +98,8 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 configure_prompt() {
-    prompt_symbol=㉿
-    [ "$EUID" -eq 0 ] && prompt_symbol=💀
+    prompt_symbol=➨
+    [ "$EUID" -eq 0 ] && prompt_symbol=😱❗️💀
     case "$PROMPT_ALTERNATIVE" in
         twoline)
             PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}(%B%F{%(#.red.blue)}%n$prompt_symbol%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
@@ -254,158 +257,9 @@ fi
 if [ -f /etc/zsh_command_not_found ]; then
     . /etc/zsh_command_not_found
 fi
-
-# End of Kali zshrc
-
-# Hello message
-echo "\n---------------------------"
-echo " Hello from MacBook .zshrc"
-echo " brew update updates the above downloaded git repository with the latest code from GitHub."
-echo " brew upgrade updates the actual packages to match the versions in the updated local git repository."
-echo " copybuffer - control + o to copy buffer of current line before exec"
-echo " use Ctrl + XX to move between current position and start of line"
-echo " diff -r --side-by-side seq.txt seq2.txt "
-echo ' ls -laR or ls -lAR(if you want . and .. folder'
-echo " ping -c 3 google.com"
-echo "---------------------------\n"
-head -2 bible_verse
-
-#===============================================================
-#=========================== Alias =============================
-#===============================================================
-#ls alias
-# alias l='ls -AF' # -A list all entries except for . and .. and sets for super user
-# alias l='ls -CF' # -A list all entries except for . and .. and sets for super user
-# alias ll='ls -alF'
-# alias la='ls -A'
-# alias l='ls -AF' # -A list all entries except for . and .. and sets for super user
-# alias l='ls -C'  #-C force multi-column output and -f means output is not sorted
-# alias l='ls -Cf'  #-C force multi-column output and -f means output is not sorted
-
-# New alias that I copied from kali linux zshrc file
-alias ll='ls -lahF'
-alias la='ls -AF'
-alias l='ls -CF'
-alias li='ls -shitF'
-alias lm='ls -ltr'
-alias lss='ls -R'
-
-# ls alias for exa
-# alias l='exa'
-# alias la='exa -a'
-# alias ll='exa -lah'
-# alias ls='exa --color=auto'
-# alias ls='ls --classify --tabsize=0 --group-directories-first --literal --color=auto --show-control-chars --human-readable'
-
-# bat replaces less for better syntax and highlighting
-alias less='bat'
-
-# Copy the PWD to the clipboard using pbcopy app
-alias cpwd="pwd | tr -d '\n' | pbcopy && echo 'pwd copied to clipboard'"
-
-# Create a folder and cd into it
-function mkcd() { mkdir -p "$@" && "$_"; }
-
-# Confirmation when moving or removing files
-# verbose  flag displays message
-alias mv='mv -vn'
-alias rm='rm -iv'
-
-#==============================================================
-#======================== Git Alias ===========================
-#==============================================================
-# Create alias for git commands
-# alias gdca - git diff --cached
-# gpf! - git push --force
-# grhh - git reset --hard
-alias gs='git status -sb'    # Displays 2 lines with branch and untracked file
-alias gss='git status'
-alias gpull='git pull'
-alias gpush='git push'
-alias gaa='git add .'
-alias gd='git diff | mate'
-#alias gau='git add --update'
-#alias gc='git commit -m'
-alias gc='git commit -v'      # -v flag aka --verbose shows the diff of the change
-alias gca='git commit -v -a'
-alias gb='git --no-pager branch'
-alias gba='git --no-pager  branch -a'
-alias gco='git checkout'
-alias gcob='git checkout -b'
-alias gcot='git checkout -t'
-alias gcotb='git checkout --track -b'
-alias glr='git --no-pager log --oneline'
-alias gl='git --no-pager log --oneline --reverse'
-alias gcd='git checkout -'
-#alias gll='git log --oneline --decorate --graph'
-alias gll='git --no-pager log'
-#alias glogp='git log --pretty=format:"%h %s" --graph'
-#alias glog='git --no-pager log -n 20 --pretty=format:%h%x09%an%x09%ad%x09%s --date=short --no-merges'
-alias glog='git rev-list --all --pretty=oneline'
-
-
-#==============================================================
-#======================== Folder Alias ========================
-#==============================================================
-
-# Alias to open .zshrc from any pwd
-alias zrc="$EDITOR $HOME/.zshrc"
-
-# Alias to open .vimrc from any pwd
-alias vrc="$EDITOR $HOME/.vimrc"
-
-# Source ~/.zshrc
-# Or type exec zsh in command line
-alias so="source $HOME/.zshrc"
-
-# Move pwd to $HOME
-alias h="cd $HOME/"
-
-# Shortcut for cd ..
-alias b="cd ../"
-
-# Change directory to MacOS downloads folder
-alias dl="cd /Users/leedre/Downloads"
-
-# Change directory to run control folder
-alias dot="cd $HOME/.config/dot_files"
-
-# Change directory to config folder
-alias cf="cd $HOME/.config"
-
-# Change directory to last accessed folder just like alt + d function in CLUT extension
-alias d="cd -"
-
-# Alias cat to bat
-alias cat='bat --style=plain'
-
-# Alias c to cat
-alias c='bat'
-
-# Alias for yabai folder
-alias ybf='cd $HOME/.config/yabai'
-
-# Alias for yabairc
-alias ybrc="cd $HOME/.config/yabai ; vim yabairc"
-
-# Alias for skhd folder
-alias skf='cd $HOME/.config/skhd'
-
-# Alias for skhdrc
-alias skrc="cd $HOME/.config/skhd ; vim skhdrc "
-
-# Brew services start and stop alias for yabai
-alias start='brew services start yabai'
-alias stop='brew services stop yabai'
-
-# Alias reload yabai
-alias reload="stop && start"
-
-# Alias syntax
-# alias <flag> <alias_name>="command"
-
-# Get ip address for macos
-alias ipadd="ipconfig getifaddr en0"
+#========================================================================================================
+#=================================== End of Kali zshrc ==================================================
+#========================================================================================================
 
 # Warning: Homebrew's sbin was not found in your PATH but you have installed
 # The fix was this:
@@ -413,5 +267,11 @@ export PATH="/usr/local/sbin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Loads zshrc reminder message from .config folder
+[ -f "$HOME/.config/reminder" ] && source "$HOME/.config/reminder"
+
+# Load aliases located at .config/aliasrc
+[ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
+
 # Sources zsh shell syntax highlighting which must be at the end of the file
-source /Users/leedre/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

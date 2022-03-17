@@ -14,8 +14,18 @@
 " - Hit tab to :find by partial match
 " - Use * to make it fuzzy
 " Find keycodes from command mode :help keycodes
+"
+" homebrew upgrade message said to install /usr/local/opt/fzf/install and
+" set rtp+=/usr/local/opt/fzf
+set rtp+=/usr/local/opt/fzf
 
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee > /dev/null %
+
+" syntax enable will keep your current color settings
 syntax enable
+" syntax on if you want vim to overrule your settings with the default
+syntax on
 set fileformat=unix
 set cursorline
 
@@ -36,7 +46,8 @@ set ttimeoutlen=1
 set ttyfast
 
 set mouse=a             " Allows mouse scrolling
-set scrolloff=99        " Keeps the current line in the middle when scroling and jumping through search results set clipboard=unnamed   " Yank and paste from vim to global clipboard
+set scrolloff=99        " Keeps the current line in the middle when scroling and jumping through search results 
+set clipboard=unnamed   " Yank and paste from vim to global clipboard
 " g~w                   " Toggle case entire word
 
 "================================================
@@ -65,12 +76,6 @@ nnoremap Q @q
 
 " Automatic plugin installation
 " Place before plug#begin() call
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -flo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
 call plug#begin('~/.vim/autoload')
 Plug 'junegunn/goyo.vim'
 Plug 'jacoborus/tender.vim'
@@ -308,7 +313,7 @@ map g# <Plug>(incsearch-nohl-g#)
 " For tabline.  let g:battery#update_statusline = 1 " For statusline.
 
 " That'll display whitespace chars. You can toggle it with :set invlist. 
-set list          " Display unprintable characters f12 - switches
+" set list          " Display unprintable characters f12 - switches
 " :airlineToggleWhitespace
 " To turn off the trailing whitespace check at startup, add to your vimrc:
 " Adds a unicode circle icon in bottom right

@@ -5,8 +5,10 @@ sudo yabai --load-sa
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
 # float system preferences. Most of these just diable Yabai form resizing them.
+# sticky=off allows user to move around window freely without moving existing windows
 yabai -m rule --add app="^System Preferences$" sticky=off layer=above manage=off
 yabai -m rule --add app="^Microsoft To Do$" sticky=off layer=above manage=off
+yabai -m rule --add app="^Transmission$" sticky=off layer=above manage=off
 yabai -m rule --add app="^App Store$" sticky=off layer=above manage=off
 yabai -m rule --add app="^Karabiner-Elements$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Karabiner-EventViewer$" sticky=on layer=above manage=off
@@ -20,20 +22,24 @@ yabai -m rule --add app="^Activity Monitor$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Path Finder$" manage=off
 yabai -m rule --add app="^TeamViewer$" sticky=off layer=above manage=off
 yabai -m rule --add app="^Spotify$" manage=off
+yabai -m rule --add app="^Tot$" manage=off
 # turning off iTerm2's sticky fixed alt tab focus issue
 # Actually it didn't 12/14/21
-yabai -m rule --add app="^iTerm$" sticky=off layer=above manage=off
+yabai -m rule --add app="^iTerm$" sticky=off manage=off
+yabai -m rule --add app="^Preview$" sticky=off manage=off
+yabai -m rule --add app="^Multitouch$" sticky=off manage=off
+yabai -m rule --add app="^Bartender 4$" sticky=off manage=off
+yabai -m rule --add app="^Reminders$" sticky=off manage=off
+yabai -m rule --add app="^TextEdit$" sticky=off manage=off
+yabai -m rule --add app="^balenaEtcher$" sticky=off manage=off
+yabai -m rule --add app="^Amphetamine$" sticky=off manage=off
+yabai -m rule --add app="^Notes$" manage=off
+yabai -m rule --add app="^QuickTime$" sticky=off manage=off
+yabai -m rule --add app="^Elmedia$" sticky=off layer=above manage=off
+yabai -m rule --add app="^Numi$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Terminal$" sticky=on layer=above manage=off
 yabai -m rule --add app="^VirtualBox$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Flux$" manage=off
-yabai -m rule --add app="^Time Out$" manage=off
-yabai -m rule --add app="^perl_client_app$" manage=off
 yabai -m rule --add app="^console$" manage=off
-yabai -m rule --add app="^Harvest$" manage=off
-yabai -m rule --add app="^CiscoSparkHelper$" manage=off
-yabai -m rule --add app="^Logi Options$" manage=off
-yabai -m rule --add app="^Cisco Webex Start$" manage=off
-yabai -m rule --add app="^Private Internet Access$" manage=off
 
 # bar settings
 yabai -m config status_bar                   off
@@ -75,7 +81,7 @@ yabai -m config mouse_action2                resize
 # general space settings
 # bsp or float (default is bsp) 
 yabai -m config layout                       bsp
-yabai -m config top_padding                  28
+yabai -m config top_padding                  2
 yabai -m config bottom_padding               2
 yabai -m config left_padding                 2
 yabai -m config right_padding                2

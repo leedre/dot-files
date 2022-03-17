@@ -14,13 +14,13 @@ hyper - 0x21 : $(yabai -m window $(yabai -m query --windows --window | jq -re ".
 # lshift - x : terminal-notifier -message "$(yabai -m query --windows --window | jq -re ".id")"
 
 # open terminal
-hyper - return : /Applications/iTerm.app/Contents/MacOS/iTerm2
+# hyper - return : /Applications/iTerm.app/Contents/MacOS/iTerm2
 
 # swap window
-hyper - y : yabai -m window --swap west
+hyper - u : yabai -m window --swap west
 # shift + alt - j : yabai -m window --swap south
 # shift + alt - k : yabai -m window --swap north
-hyper - backspace : yabai -m window --swap east
+hyper - i : yabai -m window --swap east
 
 # focus display
 # ctrl + cmd - 1 : yabai -m window --display 1 yabai -m display --focus 1
@@ -44,7 +44,7 @@ hyper - r : yabai -m space --rotate 90
 
 # flip the tree vertically
 # aka mirror tree y-axis
-hyper - v : yabai -m space --mirror y-axis
+hyper - y : yabai -m space --mirror y-axis
 # mirror tree x-axis
 hyper - x : yabai -m space --mirror x-axis
 
@@ -52,28 +52,29 @@ hyper - x : yabai -m space --mirror x-axis
 hyper - f : yabai -m window --toggle zoom-fullscreen
 
 # fast focus to first application of current workspace
-hyper - space : yabai -m window --focus first
+# hyper - return : yabai -m window --focus first
+hyper - m : yabai -m window --focus first
+hyper - space : yabai -m window --focus next
 
 # Send current app/window to workspace
-hyper - m : yabai -m window --label main
 hyper - p : yabai -m window --space prev
 hyper - n : yabai -m window --space next
 
-# If fn key is held down vim arrow keys enabled
-# Arrow Keys
-fn - h : yabai -m window --focus west
-fn - j : yabai -m window --focus south
-fn - k : yabai -m window --focus north
-fn - l : yabai -m window --focus east
+# Move window focus using vim directions
+# If control key is held down vim arrow keys enabled
+alt - h : yabai -m window --focus west
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - l : yabai -m window --focus east
 
 # balance size of windows
-fn - 0 : yabai -m space --balance
+ctrl - 0 : yabai -m space --balance
 
 # control window size, modified to be intuitive
-fn + ctrl - h : yabai -m window --resize left:-20:0;yabai -m window --resize right:-20:0
-fn + ctrl - l : yabai -m window --resize right:20:0;yabai -m window --resize left:20:0
-fn + ctrl - j : yabai -m window --resize bottom:0:20;yabai -m window --resize top:0:20
-fn + ctrl - k : yabai -m window --resize top:0:-20;yabai -m window --resize bottom:0:-20
+ctrl - h : yabai -m window --resize left:-20:0;yabai -m window --resize right:-20:0
+ctrl - l : yabai -m window --resize right:20:0;yabai -m window --resize left:20:0
+ctrl - j : yabai -m window --resize bottom:0:20;yabai -m window --resize top:0:20
+ctrl - k : yabai -m window --resize top:0:-20;yabai -m window --resize bottom:0:-20
 
 ################################################################
 ############################# UNUSED ###########################
@@ -122,10 +123,10 @@ fn + ctrl - k : yabai -m window --resize top:0:-20;yabai -m window --resize bott
 #alt - e : yabai -m window --toggle split
 
 ## toggle window border
-# shift + option - b : yabai -m window --toggle border
+hyper - o : yabai -m window --toggle border
 
 ## destroy desktop
-# hyper - x : yabai -m space --destroy
+# hyper - 4 : yabai -m space --destroy
 
 
 # label space
