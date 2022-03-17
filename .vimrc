@@ -64,8 +64,9 @@ nnoremap Q @q
 
 
 "================================================
-""""""""""""""""" vim-plug """"""""""""""""""""""" 
+"================ Vim-Plug ==================
 "================================================
+"
 " Plugin notes and trick
 " reload .vimrc and :pluginstall to install plugin.
 " PlugDiff
@@ -95,7 +96,7 @@ Plug 'tpope/vim-repeat'
 " Plug 'justinmk/vim-sneak'
 "
 "================================================
-"""""" Themes """"""""""
+" ==============Themes ==============
 "================================================
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes' 
@@ -109,7 +110,7 @@ if (has("termguicolors"))
 endif
 
 "================================================
-" ====---- Color theme =========--
+"============== Color theme =====================
 "================================================
 " activate the theme by adding colorscheme <name-of-theme> 
 " or change it on-the-fly by running :colorscheme <name-of-theme>
@@ -263,7 +264,7 @@ map <leader>g :Goyo \| set linebreak<CR>
 "<em>Hello</em> world!
 
 "================================================
-""""""""""""""" incsearch easymotion""""""""""""""""""" 
+" ==============incsearch easymotion ============
 "================================================
 map z/ <Plug>(incsearch-easymotion-/)
 map z? <Plug>(incsearch-easymotion-?)
@@ -283,7 +284,7 @@ map zg/ <Plug>(incsearch-easymotion-stay)
 " noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
 "
 "======================================================
-""""""""""""""""" incsearch pluging """"""""""""""""""" 
+" ============ incsearch pluging ======================
 "======================================================
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
@@ -305,7 +306,7 @@ map g# <Plug>(incsearch-nohl-g#)
 
 
 "================================================
-""""""""""""""""" Vim airline""""""""""""" 
+" ============== Vim airline ====================
 "================================================
 " let g:airline#extensions#tabline#formatter = 'default'
 " Additionally, assign 1 to corresponding variables to immediately reflect the
@@ -331,13 +332,11 @@ let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
 " set lighline theme inside lightline config
 " let g:lightline = { 'colorscheme': 'angr' }
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "================================================
-""""""""""""""  Vim motion leader keys """""""""""""""" 
-
+" ===========Vim motion leader keys =============
 "================================================
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Searches words
 " map <leader>f <Plug>(easymotion-w)
 " Searches characters with bi-direction
@@ -350,11 +349,9 @@ map <leader>j <Plug>(easymotion-j)
 map <leader>k <Plug>(easymotion-k)
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "================================================
-""""""""""""""""" Vim Object Indentation """""""""""""" 
+" ========= Vim Object Indentation ==============
 "================================================
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vii selects all lines at the same indentation level as the current line.
 " vii (goes into visual mode and selects the body of a try clause), ii (widens the selection to the entire method), ii (widens the selection again, to the entire class body), ii (widens the selection to also include the class signature). after this, further ii’s start selecting lines and blocks above the class.
 " vai selects an indentation level and both the unindented line above and the unindented line below it
@@ -363,7 +360,7 @@ map <leader>k <Plug>(easymotion-k)
 " you can combine the ai, ii and ai text objects with other operators besides v for visual mode, e.g. cii, dii, yii etc. for example >ii or <ii will indent or dedent an indented block. if you have vim-commentary installed then gcii will comment out an indented block.
 
 "================================================
-""""""""""""""""" Vim Commentary """""""""""""""""""""" 
+" ============Vim Commentary ================ 
 "================================================
 " vim-commentarty installed in tpope vim/pack/tpope/
 " Comment stuff out. Use gcc to comment out a line (takes a count), gc to comment out the target of a motion (for example, gcap to comment out a paragraph), gc in visual mode to comment out the selection, and gc in operator pending mode to target a comment. You can also use it as a command, either with a range like :7,17Commentary
@@ -399,12 +396,6 @@ function! ToggleLine()
 endfunction
 
 map <leader>,l :call ToggleLine()<CR>
-
-" Multiple leader keys potential 
-" let mapleader=","
-" map <leader>n :set number<CR>
-" let mapleader="-"
-" map <leader>n :set nonumber<CR>
 
 " affects what happens when you press the <TAB> key
 set expandtab 
