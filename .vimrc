@@ -1,44 +1,34 @@
 " start
-" New stuff to try out
-" FINDING FILES:
-
-" Search down into subfolders
-" Provides tab-completion for all file-related tasks
-" set path+=**
-
-" Display all matching files when we tab complete
-" It's already set later in this file
-" set wildmenu
-
-" NOW WE CAN:
-" - Hit tab to :find by partial match
-" - Use * to make it fuzzy
-" Find keycodes from command mode :help keycodes
-"
-" homebrew upgrade message said to install /usr/local/opt/fzf/install and
-" set rtp+=/usr/local/opt/fzf
-set rtp+=/usr/local/opt/fzf
-
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap w!! w !sudo tee > /dev/null %
-
-" syntax enable will keep your current color settings
-syntax enable
-" syntax on if you want vim to overrule your settings with the default
 syntax on
 set fileformat=unix
 set cursorline
 
-" Change cursor shape in different modes
+" Gvim setting on windows 10
+" set guioptions-=m  "menu bar
+set guioptions-=T  "toolbar
+set guioptions-=r  "scrollbar
+
+if has("gui_running")
+  if has("gui_gtk2")
+    set guifont=Lucida_Console:h14
+  elseif has("gui_macvim")
+    set guifont=Menlo\ Regular:h14
+  elseif has("gui_win32")
+    set guifont=Consolas:h11:cANSI
+  endif
+endif
+" Read :h guifont to set meslolgs at 10 size
+" set guifont=MesloLGS
+
+" Change acursor shape in different modes
 " I had to add this after changing iterm2 to vertical cursor line
 " Must have set cursorline
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
-" Toggles cursorline between normal and insert mode
+" Toggles cursorline between normal and insert modes
 autocmd InsertEnter,InsertLeave * set cul!
-
 " Finally fixed lag between mode change
 " thanks to stackoverflow's post
 set ttimeout
@@ -62,11 +52,9 @@ nnoremap Q @q
 " Enables @q in visual mode and paste macro at beginning of line
 " vnoremap Q :normal! @q<CR>
 
-
-"================================================
-"================ Vim-Plug ==================
-"================================================
-"
+"""""""""""""""""""""""""""""""""""""""""""""""""e
+""""""""""""""""" vim-plug """"""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin notes and trick
 " reload .vimrc and :pluginstall to install plugin.
 " PlugDiff
@@ -75,9 +63,7 @@ nnoremap Q @q
 " PlugInstall
 " PlugClean
 
-" Automatic plugin installation
-" Place before plug#begin() call
-call plug#begin('~/.vim/autoload')
+call plug#begin('~/vimfiles/autoload')
 Plug 'junegunn/goyo.vim'
 Plug 'jacoborus/tender.vim'
 Plug 'easymotion/vim-easymotion'
@@ -93,67 +79,49 @@ Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+" Plug 'frazrepo/vim-rainbow'
+Plug 'luochen1990/rainbow'
+Plug 'dracula/vim', { 'as': 'dracula' }
+
 " Plug 'justinmk/vim-sneak'
-"
-"================================================
-" ==============Themes ==============
-"================================================
+""""""""""""""""""""""""
+"""""" Themes """"""""""
+""""""""""""""""""""""""
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes' 
 Plug 'arcticicestudio/nord-vim'
 Plug 'tomasiser/vim-code-dark'
+Plug 'rakr/vim-one'
 call plug#end()
 
 " If you have vim >=8.0 or Neovim >= 0.1.5
-if (has("termguicolors"))
- set termguicolors
-endif
+" if (has("termguicolors"))
+"  set termguicolors
+" endif
 
-"================================================
-"============== Color theme =====================
-"================================================
+" --------------------------------------------
+" ----------- Color theme --------------------
+" --------------------------------------------
 " activate the theme by adding colorscheme <name-of-theme> 
 " or change it on-the-fly by running :colorscheme <name-of-theme>
 " Tender theme plugin
-colorscheme tender
+" colorscheme tender
+" colorscheme dracula
 
 " vs code dark theme mode
-" let g:airline_theme = 'codedark'
-" colorscheme codedark
+" let g:airline_theme = 'one'
+colorscheme one
+set background=dark
 
-"================================================
-" ====---- Replace word =========-
-"================================================
-" Remap <Control - r> to replace every word on current line
-nnoremap <C-l> :s///g<left><left><left>
-
-" Change only whole words exactly matching 'foo' to 'bar'; ask for confirmation.
-" :%s/\<foo\>/bar/gc
-" Remap <Control - R> to replace all words in current file
-nnoremap <C-r> :%s///gc<left><left><left>
-
-" Find each occurrence of 'foo' (in all lines), and replace it with 'bar'.
-" :%s/foo/bar/g
-
-" Find each occurrence of 'foo' (in the current line only), and replace it with 'bar'.
-" :s/foo/bar/g
-
-" Change each 'foo' to 'bar', but ask for confirmation first.
-" :%s/foo/bar/gc
-
-"================================================
-" ====---- Leader keys =========--
-"================================================
+" --------------------------------------------
+" ----------- Leader keys --------------------
+" --------------------------------------------
 " Map leader key to comma (,)
 let mapleader = ","
 
 " Quit with leader key shortcut
-" Shortcut is ZQ
 nnoremap <leader>q :q!<CR>
-
 " Writes to buffer and changes modification time even if you changed nothing
-" If you quit via :wq, the modification time will change as the file is
-" technically rewritten.
 " :x will not touch modification time and won't be re-saved
 " if file was unchanged
 nnoremap <leader>s :w<CR>
@@ -161,16 +129,16 @@ nnoremap <leader>s :w<CR>
 " Map Fuzzy Search
 nmap <leader><leader>f :FZF<CR>
 
-"================================================
-" =======- Terminal =========---
-"================================================
+" --------------------------------------------
+" -------------- Terminal ---------------------
+" --------------------------------------------
 " Enter terminal
 nnoremap <leader>t :botright vertical terminal<CR>
 nnoremap <leader><leader>t :terminal<CR>
 
-"================================================
-" ====----   NERDTree =========---
-"================================================
+" --------------------------------------------
+" -----------   NERDTree ---------------------
+" --------------------------------------------
 " nnoremap <leader>ng :NERDTreeFocus<CR>
 nnoremap <leader>n :NERDTreeToggle<CR>
 " nnoremap <leader>nf :NERDTreeFind<CR>
@@ -199,15 +167,20 @@ nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :wri
 " press enter
 nnoremap <leader>b :ls<CR>:b<Space>
 
-
-"================================================
-" ====-- Goyo Plugin toggle ======---
-"================================================
+" --------------------------------------------
+" --------- Goyo Plugin toggle ---------------
+" --------------------------------------------
 map <leader>g :Goyo \| set linebreak<CR>
 
-"================================================
-" ======= gitgutter ----- ======--
-"================================================
+" --------------------------------------------
+" --------- Vim Rainbow Toggle ---------------
+" --------------------------------------------
+map <leader>r :RainbowToggle<CR>
+let g:rainbow_active = 1 "set to 0 if you want to enable it later with :RainbowToggle
+
+" --------------------------------------------
+" ------------- gitgutter ----- --------------
+" --------------------------------------------
 " You can explicitly turn vim-gitgutter off and on (defaults to on):
 
 " turn off with :GitGutterDisable
@@ -229,9 +202,9 @@ map <leader>g :Goyo \| set linebreak<CR>
 " turn off with :GitGutterLineHighlightsDisable
 " toggle with :GitGutterLineHighlightsToggle.
 
-"================================================
-" ======= tpope Surround  ======--
-"================================================
+" --------------------------------------------
+" ------------- tpope Surround  --------------
+" --------------------------------------------
 "It's easiest to explain with examples. Press cs"' inside
 
 ""Hello world!"
@@ -263,9 +236,9 @@ map <leader>g :Goyo \| set linebreak<CR>
 
 "<em>Hello</em> world!
 
-"================================================
-" ==============incsearch easymotion ============
-"================================================
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""" incsearch easymotion""""""""""""""""""" 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map z/ <Plug>(incsearch-easymotion-/)
 map z? <Plug>(incsearch-easymotion-?)
 map zg/ <Plug>(incsearch-easymotion-stay)
@@ -283,9 +256,9 @@ map zg/ <Plug>(incsearch-easymotion-stay)
 
 " noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
 "
-"======================================================
-" ============ incsearch pluging ======================
-"======================================================
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""" incsearch pluging """"""""""""""""""" 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 
@@ -304,10 +277,9 @@ map #  <Plug>(incsearch-nohl-#)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 
-
-"================================================
-" ============== Vim airline ====================
-"================================================
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""" Vim airline""""""""""""" 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " let g:airline#extensions#tabline#formatter = 'default'
 " Additionally, assign 1 to corresponding variables to immediately reflect the
 " changes to statusline or tabline.let g:battery#update_tabline = 1
@@ -318,12 +290,12 @@ map g# <Plug>(incsearch-nohl-g#)
 " :airlineToggleWhitespace
 " To turn off the trailing whitespace check at startup, add to your vimrc:
 " Adds a unicode circle icon in bottom right
-" let g:airline_section_z = '◉ ␤ % %l/%c'
+" let g:airline_section_z = 'â—‰ â¤ % %l/%c'
 
 let g:airline#extensions#whitespace#enabled = 0
 " Displays white list as circle icon during insert mode, but turned it off
 " because it was distracting
-" set listchars=tab:•\ ,trail:•,extends:»,precedes:« " Unprintable chars mapping
+" set listchars=tab:â€¢\ ,trail:â€¢,extends:Â»,precedes:Â« " Unprintable chars mapping
 let g:airline_powerline_fonts = 1
 set statusline=%{battery#component()}
 set tabline=%{battery#component()}
@@ -332,11 +304,9 @@ let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
 " set lighline theme inside lightline config
 " let g:lightline = { 'colorscheme': 'angr' }
 
-
-"================================================
-" ===========Vim motion leader keys =============
-"================================================
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""  Vim motion leader keys """""""""""""""" 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Searches words
 " map <leader>f <Plug>(easymotion-w)
 " Searches characters with bi-direction
@@ -349,19 +319,19 @@ map <leader>j <Plug>(easymotion-j)
 map <leader>k <Plug>(easymotion-k)
 
 
-"================================================
-" ========= Vim Object Indentation ==============
-"================================================
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""" Vim Object Indentation """""""""""""" 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vii selects all lines at the same indentation level as the current line.
-" vii (goes into visual mode and selects the body of a try clause), ii (widens the selection to the entire method), ii (widens the selection again, to the entire class body), ii (widens the selection to also include the class signature). after this, further ii’s start selecting lines and blocks above the class.
+" vii (goes into visual mode and selects the body of a try clause), ii (widens the selection to the entire method), ii (widens the selection again, to the entire class body), ii (widens the selection to also include the class signature). after this, further iiâ€™s start selecting lines and blocks above the class.
 " vai selects an indentation level and both the unindented line above and the unindented line below it
 " vai selects all lines at the same indentation level as the current line, and the first unindented line above the indented block (e.g. the method signature, if the indented
 "
 " you can combine the ai, ii and ai text objects with other operators besides v for visual mode, e.g. cii, dii, yii etc. for example >ii or <ii will indent or dedent an indented block. if you have vim-commentary installed then gcii will comment out an indented block.
 
-"================================================
-" ============Vim Commentary ================ 
-"================================================
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""" Vim Commentary """""""""""""""""""""" 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-commentarty installed in tpope vim/pack/tpope/
 " Comment stuff out. Use gcc to comment out a line (takes a count), gc to comment out the target of a motion (for example, gcap to comment out a paragraph), gc in visual mode to comment out the selection, and gc in operator pending mode to target a comment. You can also use it as a command, either with a range like :7,17Commentary
 " My favorite file type isn't supported!
@@ -396,6 +366,12 @@ function! ToggleLine()
 endfunction
 
 map <leader>,l :call ToggleLine()<CR>
+
+" Multiple leader keys potential 
+" let mapleader=","
+" map <leader>n :set number<CR>
+" let mapleader="-"
+" map <leader>n :set nonumber<CR>
 
 " affects what happens when you press the <TAB> key
 set expandtab 
@@ -478,7 +454,7 @@ set wildmode=list:longest,full
 
 " Set leader+5 to spellcheck 
 " Navigate Spell check
-" So you have all your misspellings highlighted…how do you fix them?
+" So you have all your misspellings highlightedâ€¦how do you fix them?
 " Type <]s> to go to the next misspelled word (<[s> to go back). 
 " If the word you are on is misspelled type <z=> and you will be 
 " presented with a numbered list of words vim thinks you meant. 
@@ -493,9 +469,9 @@ set wildmode=list:longest,full
 " you can add it to your wrong word list by typing <zw> (zuw to undo).
 map <leader>5 :setlocal spell! spelllang=en_us<CR>
 
-"==================================-
+"--------------------------------------------------------------------
 " Beginning of tpope's sensible plugin
-"==================================-
+"--------------------------------------------------------------------
 
 if has('autocmd')
   filetype plugin indent on
@@ -540,18 +516,17 @@ set ruler
 " endif
 " set display+=lastline
 
-" if &encoding ==# 'latin1' && has('gui_running')
-"   set encoding=utf-8
-" endif
-set encoding=utf-8
+if &encoding ==# 'latin1' && has('gui_running')
+  set encoding=utf-8
+endif
 
 if &listchars ==# 'eol:$'
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 endif
 
-if v:version > 703 || v:version == 703 && has("patch541")
-  set formatoptions+=j " Delete comment character when joining commented lines
-endif
+" if v:version > 703 || v:version == 703 && has("patch541")
+"   set formatoptions+=j " Delete comment character when joining commented lines
+" endif
 
 if has('path_extra')
   setglobal tags-=./tags tags-=./tags; tags^=./tags;
@@ -572,9 +547,9 @@ set sessionoptions-=options
 set viewoptions-=options
 
 " Allow color schemes to do bright colors without forcing bold.
-if &t_Co == 8 && $TERM !~# '^Eterm'
-  set t_Co=16
-endif
+" if &t_Co == 8 && $TERM !~# '^Eterm'
+"   set t_Co=16
+" endif
 
 " Load matchit.vim, but only if the user hasn't installed a newer version.
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
@@ -590,9 +565,9 @@ endif
 
 " vim:set ft=vim et sw=2:
 
-"==================================-
+"--------------------------------------------------------------------
 " End of tpope's sensible plugin
-"==================================-
+"--------------------------------------------------------------------
  
 " Remaps ^ to B
 nnoremap B ^
@@ -603,6 +578,10 @@ nnoremap E g_
 " Yanks from the current position to end of matched word
 nnoremap ye vg_y
 
+" To make it easer to copy and paste
+vnoremap <C-c> "+y
+map <C-y> "+p
+
 " Yanks from current position to beginning of non blank character because of
 " carrot sign
 nnoremap yb vg^y 
@@ -611,7 +590,7 @@ nnoremap yb vg^y
 nnoremap db d0
 
 " Deletes from current position to end of line
-nnoremap de d$
+" nnoremap de d$
 
 " Press <F9> while in insert mode to stops indenting when pasting with the mouse
 set pastetoggle=<f9>
@@ -623,13 +602,13 @@ set pastetoggle=<f9>
 " inoremap { {<CR>}<Esc>ko
 
 " sets ?
-"if &term == "screen"
-"	set t_Co=256
-"	endif
+if &term == "screen"
+set t_Co=256
+endif
 
-"=====================================
+"-------------------------------------------------------------------------
 " Commenting blocks of code.
-"=====================================
+"-------------------------------------------------------------------------
 
 " set nocompatible
 " filetype plugin on
@@ -647,9 +626,9 @@ set pastetoggle=<f9>
 
 " autocmd FileType apache setlocal commentstring=#\ %s
 
-"=====================================
+"-------------------------------------------------------------------------
 " HTML vimrc
-"=====================================
+"-------------------------------------------------------------------------
 
 " autocmd FileType html inoremap ;b <b></b><Space><++><Esc>FbT>i
 " autocmd FileType html inoremap ;i <em></em><Space><++><Esc>FeT>i
@@ -664,13 +643,32 @@ set pastetoggle=<f9>
 " autocmd FileType html inoremap ;c <!----><Space><++><Esc>
 " autocmd FileType html inoremap ;d <div></div><Space><++><Esc>FdT>i
 
-"=====================================
+"-------------------------------------------------------------------------
 
 " Exlorer splits to the right wheny add an exclamation mark
 nnoremap <leader>e :Lex!<CR>
 
 " Edit vimrc and source file
+" nnoremap confe :e $MYVIMRC<CR>
+" Reload vims configuration file
+" nnoremap confr :source $MYVIMRC<CR>
+
+" Leader mapping to source vimrc file
 " nnoremap <leader>vt :e $MYVIMRC<CR>
 " Reload vimrc configuration file
 nnoremap <leader>S :source $MYVIMRC<CR>
-"end
+
+" Times the number of times a particular command takes to execute the specified number of times (in seconds).
+function! HowLong( command, numberOfTimes )
+  " We don't want to be prompted by a message if the command being tried is
+  " an echo as that would slow things down while waiting for user input.
+  let more = &more
+  set nomore
+  let startTime = localtime()
+  for i in range( a:numberOfTimes )
+    execute a:command
+  endfor
+  let result = localtime() - startTime
+  let &more = more
+  return result
+endfunction
