@@ -33,6 +33,7 @@ yabai -m rule --add app="^Reminders$" sticky=off manage=off
 yabai -m rule --add app="^TextEdit$" sticky=off manage=off
 yabai -m rule --add app="^balenaEtcher$" sticky=off manage=off
 yabai -m rule --add app="^Amphetamine$" sticky=off manage=off
+yabai -m rule --add app="^FaceTime$" sticky=off manage=off
 yabai -m rule --add app="^Notes$" manage=off
 yabai -m rule --add app="^QuickTime$" sticky=off manage=off
 yabai -m rule --add app="^Elmedia$" sticky=off layer=above manage=off
