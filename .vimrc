@@ -46,8 +46,7 @@ set ttimeoutlen=1
 set ttyfast
 
 set mouse=a             " Allows mouse scrolling
-" Minimal number of screen lines to keep above and below the cursor
-set scrolloff=999        " Keeps the current line in the middle when scroling and jumping through search results 
+set scrolloff=99        " Keeps the current line in the middle when scroling and jumping through search results 
 set clipboard=unnamed   " Yank and paste from vim to global clipboard
 " g~w                   " Toggle case entire word
 
@@ -94,7 +93,6 @@ Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'luochen1990/rainbow'
 " Plug 'justinmk/vim-sneak'
 "
 "================================================
@@ -104,7 +102,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes' 
 Plug 'arcticicestudio/nord-vim'
 Plug 'tomasiser/vim-code-dark'
-Plug 'rakr/vim-one'
 call plug#end()
 
 " If you have vim >=8.0 or Neovim >= 0.1.5
@@ -118,9 +115,7 @@ endif
 " activate the theme by adding colorscheme <name-of-theme> 
 " or change it on-the-fly by running :colorscheme <name-of-theme>
 " Tender theme plugin
-" colorscheme tender
-colorscheme one
-set background=dark
+colorscheme tender
 
 " vs code dark theme mode
 " let g:airline_theme = 'codedark'
@@ -206,20 +201,12 @@ nnoremap <leader>b :ls<CR>:b<Space>
 
 
 "================================================
-"=========== Goyo Plugin toggle =================
+" ====-- Goyo Plugin toggle ======---
 "================================================
 map <leader>g :Goyo \| set linebreak<CR>
 
 "================================================
-"========== Vim Rainbow Toggle ==================
-"================================================
-map <leader>r :RainbowToggle<CR>
-" Set to 0 if you want to enable it later with :RainbowToggle
-" Set it always on
-let g:rainbow_active = 1 
-
-"================================================
-"============== Git-Gutter ======================
+" ======= gitgutter ----- ======--
 "================================================
 " You can explicitly turn vim-gitgutter off and on (defaults to on):
 
@@ -243,7 +230,7 @@ let g:rainbow_active = 1
 " toggle with :GitGutterLineHighlightsToggle.
 
 "================================================
-"============== tpope Surround ==================
+" ======= tpope Surround  ======--
 "================================================
 "It's easiest to explain with examples. Press cs"' inside
 
@@ -277,7 +264,7 @@ let g:rainbow_active = 1
 "<em>Hello</em> world!
 
 "================================================
-"============== incsearch easymotion ============
+" ==============incsearch easymotion ============
 "================================================
 map z/ <Plug>(incsearch-easymotion-/)
 map z? <Plug>(incsearch-easymotion-?)
@@ -296,9 +283,9 @@ map zg/ <Plug>(incsearch-easymotion-stay)
 
 " noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
 "
-"=================================================
-"============ incsearch pluging ==================
-"=================================================
+"======================================================
+" ============ incsearch pluging ======================
+"======================================================
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 
@@ -349,6 +336,7 @@ let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
 "================================================
 " ===========Vim motion leader keys =============
 "================================================
+
 " Searches words
 " map <leader>f <Plug>(easymotion-w)
 " Searches characters with bi-direction
@@ -382,7 +370,6 @@ map <leader>k <Plug>(easymotion-k)
 " Comment stuff out. Use gcc to comment out a line (takes a count), gc to comment out the target of a motion (for example, gcap to comment out a paragraph), gc in visual mode to comment out the selection, and gc in operator pending mode to target a comment. You can also use it as a command, either with a range like :7,17Commentary
 
 " Turns off bell sound
-" Error bells are displayed visually
 set visualbell
 
 " Set splits to open to the right instead of bottom
@@ -420,7 +407,6 @@ set smarttab
 " changes the width of the TAB character
 set tabstop=4
 
-" automatically indent when adding a curly bracket
 set smartindent
 
 " does nothing more than copy the indentation from the previous line
@@ -438,6 +424,7 @@ nnoremap <CR> o<Esc>
 " No more holding shift + semicolon key to enter command mode
 " Semicolon alone brings you to command mode
 nnoremap ; : 
+nnoremap ; : 
 
 " Use [ and <space> to make new line
 " nnoremap <silent> [<space>  :<c-u>put!=repeat([''],v:count)<bar>']+1<cr>
@@ -454,11 +441,7 @@ set smartcase
 
 " Incremental search that shows partial matches
 " Starts searching before pressing enter
-" Search as you type
 set incsearch
-
-" show editing mode
-set showmode
 
 " Farewell, nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>! This feature turns 'hlsearch' off automatically after searching-related motions.
 
@@ -493,11 +476,6 @@ set wildignore=*.o,*.obj.*~
 " Makes commandline tab completion similar to bash
 set wildmode=list:longest,full
 
-" Autocomplete
-" Use simple ctrl and space instead of ctrl-x and ctrl-o to key combination
-" doesn't seem to work tho
-" imap <C-Space> <C-x><C-o>
-"
 " Set leader+5 to spellcheck 
 " Navigate Spell check
 " So you have all your misspellings highlighted…how do you fix them?
@@ -515,9 +493,9 @@ set wildmode=list:longest,full
 " you can add it to your wrong word list by typing <zw> (zuw to undo).
 map <leader>5 :setlocal spell! spelllang=en_us<CR>
 
-"=======================================
+"==================================-
 " Beginning of tpope's sensible plugin
-"=======================================
+"==================================-
 
 if has('autocmd')
   filetype plugin indent on
@@ -551,11 +529,7 @@ set incsearch
 
 " Displays the status on the right side of the status line. By default
 " the line, column, virtual, and relative position
-" Show line number and cursor position
 set ruler
-
-" Displayif incomplete commands
-set showcmd
 
 " Uncomment if scrolling page seems buggy
 " if !&scrolloff
@@ -698,5 +672,5 @@ nnoremap <leader>e :Lex!<CR>
 " Edit vimrc and source file
 " nnoremap <leader>vt :e $MYVIMRC<CR>
 " Reload vimrc configuration file
-nnoremap <leader>,s :source $MYVIMRC<CR>
+nnoremap <leader>S :source $MYVIMRC<CR>
 "end
