@@ -24,6 +24,7 @@ cmap w!! w !sudo tee > /dev/null %
 
 " syntax enable will keep your current color settings
 syntax enable
+
 " syntax on if you want vim to overrule your settings with the default
 syntax on
 set fileformat=unix
@@ -46,7 +47,8 @@ set ttimeoutlen=1
 set ttyfast
 
 set mouse=a             " Allows mouse scrolling
-set scrolloff=99        " Keeps the current line in the middle when scroling and jumping through search results 
+" Minimal number of screen lines to keep above and below the cursor
+set scrolloff=999        " Keeps the current line in the middle when scroling and jumping through search results 
 set clipboard=unnamed   " Yank and paste from vim to global clipboard
 " g~w                   " Toggle case entire word
 
@@ -57,7 +59,7 @@ set clipboard=unnamed   " Yank and paste from vim to global clipboard
 " Exceute quicker macro or type @q without this remap.
 " As a bonus, use @: to replay the last ex command. (And then that becomes the "last used macro" that can be repeated with @@.)
 " Repeat macros by 4@q
-nnoremap Q @q
+" nnoremap Q @q
 
 " Enables @q in visual mode and paste macro at beginning of line
 " vnoremap Q :normal! @q<CR>
@@ -93,6 +95,8 @@ Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'luochen1990/rainbow'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 " Plug 'justinmk/vim-sneak'
 "
 "================================================
@@ -102,6 +106,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes' 
 Plug 'arcticicestudio/nord-vim'
 Plug 'tomasiser/vim-code-dark'
+Plug 'rakr/vim-one'
 call plug#end()
 
 " If you have vim >=8.0 or Neovim >= 0.1.5
@@ -115,7 +120,9 @@ endif
 " activate the theme by adding colorscheme <name-of-theme> 
 " or change it on-the-fly by running :colorscheme <name-of-theme>
 " Tender theme plugin
-colorscheme tender
+" colorscheme tender
+colorscheme one
+set background=dark
 
 " vs code dark theme mode
 " let g:airline_theme = 'codedark'
@@ -180,16 +187,16 @@ nnoremap <leader>n :NERDTreeToggle<CR>
 "================================================
 "=============== Buffer Remaps ==================
 "================================================
-map bn :bnext<cr>
-map bp :bp<cr>
-map bd :b#<cr>  
-map bq :bw<cr>
+nnoremap <leader>bn :bnext<cr>
+nnoremap <leader>bp :bp<cr>
+nnoremap <leader>bd :bd<cr>  
+nnoremap <leader>bq :bw<cr>
 
 " :vert sb N(buffer #)
 " :vert belowright sb N(buffer #)
 " or try :vsp | b1
-map bv :vertical sb
-map bs :sb
+nnoremap <leader>bv :vertical sb
+nnoremap <leader>bs :sb
 
 " Tab brings you to next buffer and shift-tab goes to previous buffer
 nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
@@ -199,14 +206,70 @@ nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :wri
 " press enter
 nnoremap <leader>b :ls<CR>:b<Space>
 
+" Amix vimrc starts
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+" Specify the behavior when switching between buffers
+try
+  set switchbuf=useopen,usetab,newtab
+  set stal=2
+catch
+endtry
+
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+" Remember info about open buffers on close
+set viminfo^=%
+
+" Always show the status line
+" set laststatus=2
+
+" Format the status line
+" set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+"
+" Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
+" nmap <M-j> mz:m+<cr>`z
+" nmap <M-k> mz:m-2<cr>`z
+" vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+" vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+
+" if has("mac") || has("macunix")
+"   nmap <D-j> <M-j>
+"   nmap <D-k> <M-k>
+"   vmap <D-j> <M-j>
+"   vmap <D-k> <M-k>
+" endif
+
+" Remove the Windows ^M - when the encodings gets messed up
+" noremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
+" Quickly open a buffer for scripbble
+" map <leader>q :e ~/buffer<cr>
+" Amix vimrc ends
 
 "================================================
-" ====-- Goyo Plugin toggle ======---
+"=========== Goyo Plugin toggle =================
 "================================================
 map <leader>g :Goyo \| set linebreak<CR>
 
 "================================================
-" ======= gitgutter ----- ======--
+"========== Vim Rainbow Toggle ==================
+"================================================
+map <leader>r :RainbowToggle<CR>
+" Set to 0 if you want to enable it later with :RainbowToggle
+" Set it always on
+let g:rainbow_active = 1 
+
+"================================================
+"============== Git-Gutter ======================
 "================================================
 " You can explicitly turn vim-gitgutter off and on (defaults to on):
 
@@ -230,7 +293,7 @@ map <leader>g :Goyo \| set linebreak<CR>
 " toggle with :GitGutterLineHighlightsToggle.
 
 "================================================
-" ======= tpope Surround  ======--
+"============== tpope Surround ==================
 "================================================
 "It's easiest to explain with examples. Press cs"' inside
 
@@ -264,7 +327,7 @@ map <leader>g :Goyo \| set linebreak<CR>
 "<em>Hello</em> world!
 
 "================================================
-" ==============incsearch easymotion ============
+"============== incsearch easymotion ============
 "================================================
 map z/ <Plug>(incsearch-easymotion-/)
 map z? <Plug>(incsearch-easymotion-?)
@@ -283,9 +346,9 @@ map zg/ <Plug>(incsearch-easymotion-stay)
 
 " noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
 "
-"======================================================
-" ============ incsearch pluging ======================
-"======================================================
+"=================================================
+"============ incsearch plugin ===================
+"=================================================
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 
@@ -336,7 +399,6 @@ let g:airline#extensions#tabline#enabled = 1 " Enable the list of buffers
 "================================================
 " ===========Vim motion leader keys =============
 "================================================
-
 " Searches words
 " map <leader>f <Plug>(easymotion-w)
 " Searches characters with bi-direction
@@ -370,6 +432,7 @@ map <leader>k <Plug>(easymotion-k)
 " Comment stuff out. Use gcc to comment out a line (takes a count), gc to comment out the target of a motion (for example, gcap to comment out a paragraph), gc in visual mode to comment out the selection, and gc in operator pending mode to target a comment. You can also use it as a command, either with a range like :7,17Commentary
 
 " Turns off bell sound
+" Error bells are displayed visually
 set visualbell
 
 " Set splits to open to the right instead of bottom
@@ -380,6 +443,9 @@ set relativenumber
 
 " shows number
 set number
+
+" Sets 7 lines to the cursor when moving vertically with j & k
+" set so=7
 
 " Custom functions to toggle relative numbers
 " :call ToggleLineNumber()
@@ -407,6 +473,7 @@ set smarttab
 " changes the width of the TAB character
 set tabstop=4
 
+" automatically indent when adding a curly bracket
 set smartindent
 
 " does nothing more than copy the indentation from the previous line
@@ -423,8 +490,7 @@ nnoremap <CR> o<Esc>
 
 " No more holding shift + semicolon key to enter command mode
 " Semicolon alone brings you to command mode
-nnoremap ; : 
-nnoremap ; : 
+nnoremap ; :
 
 " Use [ and <space> to make new line
 " nnoremap <silent> [<space>  :<c-u>put!=repeat([''],v:count)<bar>']+1<cr>
@@ -441,12 +507,17 @@ set smartcase
 
 " Incremental search that shows partial matches
 " Starts searching before pressing enter
+" Search as you type
 set incsearch
+
+" show editing mode
+set showmode
 
 " Farewell, nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>! This feature turns 'hlsearch' off automatically after searching-related motions.
 
 " Removes highlights texts
-map <leader>h :noh<CR>
+" map <leader>h :noh<CR>
+map <silent> <leader>h :noh<CR>
 
 " Always displays the status bar
 " set laststatus=2
@@ -476,6 +547,19 @@ set wildignore=*.o,*.obj.*~
 " Makes commandline tab completion similar to bash
 set wildmode=list:longest,full
 
+" A buffer is hidden when it is abandoned
+" set hid
+
+" Show matching brackets
+" set showmatch
+" How many tenths of a second to blink when matching brackets
+" set mat=2
+
+" Autocomplete
+" Use simple ctrl and space instead of ctrl-x and ctrl-o to key combination
+" doesn't seem to work tho
+" imap <C-Space> <C-x><C-o>
+"
 " Set leader+5 to spellcheck 
 " Navigate Spell check
 " So you have all your misspellings highlighted…how do you fix them?
@@ -493,9 +577,9 @@ set wildmode=list:longest,full
 " you can add it to your wrong word list by typing <zw> (zuw to undo).
 map <leader>5 :setlocal spell! spelllang=en_us<CR>
 
-"==================================-
+"=======================================
 " Beginning of tpope's sensible plugin
-"==================================-
+"=======================================
 
 if has('autocmd')
   filetype plugin indent on
@@ -507,6 +591,7 @@ endif
 " Use :help 'option' to see the documentation for the given option.
 
 set autoindent
+
 " Allows backspace in insert mode
 set backspace=indent,eol,start
 set complete-=i
@@ -529,7 +614,11 @@ set incsearch
 
 " Displays the status on the right side of the status line. By default
 " the line, column, virtual, and relative position
+" Show line number and cursor position
 set ruler
+
+" Displayif incomplete commands
+set showcmd
 
 " Uncomment if scrolling page seems buggy
 " if !&scrolloff
@@ -603,6 +692,9 @@ nnoremap E g_
 " Yanks from the current position to end of matched word
 nnoremap ye vg_y
 
+" Change (replace) to end of line
+nnoremap cE c$
+
 " Yanks from current position to beginning of non blank character because of
 " carrot sign
 nnoremap yb vg^y 
@@ -613,8 +705,31 @@ nnoremap db d0
 " Deletes from current position to end of line
 nnoremap de d$
 
+" Paste the line on a new line after the current one
+" Works fine without it
+" noremap <leader>p o<ESC>p
+
 " Press <F9> while in insert mode to stops indenting when pasting with the mouse
-set pastetoggle=<f9>
+" set pastetoggle=<f9>
+" Toggle paste mode on and off (from amix vimrc)
+map <leader>P :setlocal paste!<CR>
+
+" Surround the visual selection in parenthesis/brackets (modified amix's
+" vimrc)
+" vnoremap $1 <esc>`>a)<esc>`<i(<esc>
+" vnoremap $2 <esc>`>a]<esc>`<i[<esc>
+" vnoremap $3 <esc>`>a}<esc>`<i{<esc>
+" vnoremap $$ <esc>`>a"<esc>`<i"<esc>
+" vnoremap $q <esc>`>a'<esc>`<i'<esc>
+" vnoremap $e <esc>`>a`<esc>`<i`<esc>
+vnoremap <leader>i <esc>`>a)<esc>`<i(<esc>
+vnoremap <leader>' <esc>`>a'<esc>`<i'<esc>
+vnoremap <leader>" <esc>`>a"<esc>`<i"<esc>
+
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> # :call VisualSelection('b')<CR>
 
 " remap kj to esc key
 " inoremap kj <Esc>
@@ -672,5 +787,8 @@ nnoremap <leader>e :Lex!<CR>
 " Edit vimrc and source file
 " nnoremap <leader>vt :e $MYVIMRC<CR>
 " Reload vimrc configuration file
-nnoremap <leader>S :source $MYVIMRC<CR>
+nnoremap <leader>,s :source $MYVIMRC<CR>
 "end
+
+" Source Vim configuration file and install/update vim plugins
+nnoremap <silent><leader><leader>p :source ~/.vimrc \| :PlugInstall<CR>

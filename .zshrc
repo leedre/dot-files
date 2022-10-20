@@ -273,5 +273,12 @@ export PATH="/usr/local/sbin:$PATH"
 # Load aliases located at .config/aliasrc
 [ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 
+# Source my custom scripts
+# This will run my custom scripts when I reopen my terminal
+# source $HOME/alee/customScripts/update.sh
+source $HOME/alee/myScripts/greet.sh
+source $HOME/alee/myScripts/update.sh
+source $HOME/alee/myScripts/youtube-dl-script/ytdl.sh
+
 # Sources zsh shell syntax highlighting which must be at the end of the file
 source $HOME/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
