@@ -12,6 +12,7 @@ setopt nonomatch           # hide error message if there is no match for the pat
 setopt notify              # report the status of background jobs immediately
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
+setopt autopushd           # pushes directory onto stack 
 
 # Make vim my EDITOR permanently
 export EDITOR=vim
@@ -263,7 +264,11 @@ fi
 
 # Warning: Homebrew's sbin was not found in your PATH but you have installed
 # The fix was this:
-export PATH="/usr/local/sbin:$PATH"
+# export PATH="/usr/local/sbin:$PATH"
+# Added this from github post on resetting python links
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="/usr/local/opt/python@2/libexec/bin:$PATH"
+export PATH="$PATH:/Library/Frameworks/Python.framework/Versions/3.8/bin"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

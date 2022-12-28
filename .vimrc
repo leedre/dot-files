@@ -296,7 +296,7 @@ let g:rainbow_active = 1
 "============== tpope Surround ==================
 "================================================
 "It's easiest to explain with examples. Press cs"' inside
-
+" if you use the opening character - e.g.: (, { and [ - them it will include spaces. If you use the closing character - e.g.: ), } and ] - them it won't include spaces. The aliases for these blocks (b, B and r) also doesn't includes the spaces, probably because most of time the people (like you) doesn't want the spaces.
 ""Hello world!"
 "to change it to
 

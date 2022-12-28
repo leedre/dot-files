@@ -15,7 +15,7 @@ alias ll='ls -lahF'
 alias la='ls -AF'
 alias l='ls -CF'
 alias li='ls -shitF'
-alias lm='ls -ltr'
+alias lm='ls -ltrF'
 alias lss='ls -R'
 
 # alias lst="'ls -R | grep ":$" | sed -e '"'"'s/:$//'"'"' -e '"'"'s/[^-][^\/]*\//--/g'"'"' -e '"'"'s/^/   /'"'"' -e '"'"'s/-/|/'"'"'' "
@@ -45,8 +45,23 @@ alias rm='rm -iv'
 # Colorize diff
 alias diff='colordiff -u'
 
+# Check folder size clearly
+alias size='ncdu'
+
 # Python3 alias to py
 alias pi='python3'
+
+# exiftool to exif
+alias exif='exiftool'
+
+# pbcopy alias 
+alias copy='pbcopy'
+
+# pbcopy paste 
+alias paste='pbpaste'
+
+# mysql log-in
+alias mysql='mysql -u root -p'
 
 #==============================================================
 #======================== Git Alias ===========================
@@ -99,8 +114,15 @@ alias v="vim"
 # Open vim as sudo
 alias sv='sudo vim'
 
+# type oops to run last command as sudo
+# alias oops='sudo !!$'
+# previous argument
+alias sec='!$'
+
+alias diff='diff -r --side-by-side'
+
 # Display directory history options
-alias dir='dirs -v | head -10'
+alias dirs='dirs -v | head -10'
 
 # Source ~/.zshrc
 # Or type exec zsh in command line
@@ -115,6 +137,12 @@ alias h="cd $HOME/ ; ls -F"
 # Shortcut for cd ..
 alias b="cd ../"
 
+# Change directory to MacOS desktop
+alias desktop="cd /Users/leedre/Desktop ; ls -F"
+
+# Change directory to python folder I use for testing
+alias pf="cd /Users/leedre/developer/_pythonTest ; ls -F"
+
 # Change directory to MacOS downloads folder
 alias dl="cd /Users/leedre/Downloads ; ls -F"
 
@@ -123,6 +151,9 @@ alias dot="cd $HOME/.config/dot-files ; ls -F"
 
 # Change directory to config folder
 alias cf="cd $HOME/.config ; ls -F"
+
+# Change directory to alee
+alias alee="cd $HOME/alee ; ls -F"
 
 # Change directory to last accessed folder just like alt + d function in CLUT extension
 alias d="cd -"
